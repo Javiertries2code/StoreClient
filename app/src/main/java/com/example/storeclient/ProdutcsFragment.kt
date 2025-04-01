@@ -2,19 +2,18 @@ package com.example.storeclient
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.storeclient.data.RetrofitServiceFactory
 import com.example.storeclient.entities.Products
 import com.example.storeclient.entities.ProductsItem
-import com.example.storeclient.ui.login.MyItemRecyclerViewAdapter
-import com.example.storeclient.ui.login.placeholder.PlaceholderContent
 import com.example.storeclient.ui.products.ProductsAdapter
 import kotlinx.coroutines.launch
 
@@ -23,56 +22,76 @@ import kotlinx.coroutines.launch
  */
 class ProdutcsFragment : Fragment() {
 
-    private lateinit var test_products: ProductsItem;
-    private lateinit var list_products: Products;
-
+    private lateinit var list_products: Products
     private var columnCount = 1
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var productsAdapter: ProductsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
         }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        return inflater.inflate(R.layout.fragment_produtcs_list, container, false)
+    }
 
-        val view = inflater.inflate(R.layout.fragment_produtcs_list, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        recyclerView = view.findViewById(R.id.list)
+        recyclerView.layoutManager = if (columnCount <= 1)
+            LinearLayoutManager(context)
+        else
+            GridLayoutManager(context, columnCount)
 
         val service = RetrofitServiceFactory.makeRetrofitService()
 
-        if (view is RecyclerView) {
-            lifecycleScope.launch {
-                try {
-                    val list_products = service.getAllProducts()
-
-                    with(view) {
-                        layoutManager = when {
-                            columnCount <= 1 -> LinearLayoutManager(context)
-                            else -> GridLayoutManager(context, columnCount)
-                        }
-                        adapter = ProductsAdapter(list_products)
-                    }
-                } catch (e: Exception) {
-                    Log.e("retrofit_error", "Error al obtener productos", e)
-                }
+        lifecycleScope.launch {
+            try {
+                list_products = service.getAllProducts()
+                productsAdapter = ProductsAdapter(list_products)
+                recyclerView.adapter = productsAdapter
+            } catch (e: Exception) {
+                Log.e("retrofit_error", "Error al obtener productos", e)
             }
         }
 
-        return view
+        val swipeCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean = false
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val product = list_products[position]
+
+                when (direction) {
+                    ItemTouchHelper.LEFT -> {
+                        Log.i("Swipe", "Swiped LEFT on ${product.name}")
+                    }
+                    ItemTouchHelper.RIGHT -> {
+                        Log.i("Swipe", "Swiped RIGHT on ${product.name}")
+                    }
+                }
+
+                productsAdapter.notifyItemChanged(position)
+            }
+        }
+
+        ItemTouchHelper(swipeCallback).attachToRecyclerView(recyclerView)
     }
 
-
-
     companion object {
-
-        // TODO: Customize parameter argument names
         const val ARG_COLUMN_COUNT = "column-count"
 
-        // TODO: Customize parameter initialization
         @JvmStatic
         fun newInstance(columnCount: Int) =
             ProdutcsFragment().apply {
