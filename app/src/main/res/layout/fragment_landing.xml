@@ -18,4 +18,10 @@
         android:rotationY="61"
         android:text="Button" />
 
+    <Button
+        android:id="@+id/list_products"
+        android:layout_width="wrap_content"
+        android:layout_height="104dp"
+        android:text="Button" />
+
 </FrameLayout>

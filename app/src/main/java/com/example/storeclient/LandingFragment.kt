@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.example.storeclient.data.RetrofitServiceFactory
 import com.example.storeclient.databinding.FragmentLandingBinding
+import com.example.storeclient.entities.Products
 import com.example.storeclient.entities.ProductsItem
 import kotlinx.coroutines.launch
 
@@ -27,6 +28,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class LandingFragment : Fragment() {
 private lateinit var test_products: ProductsItem;
+    private lateinit var list_products: Products;
 
     //binding
     private var _binding:FragmentLandingBinding? = null
@@ -52,12 +54,22 @@ private lateinit var test_products: ProductsItem;
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val service = RetrofitServiceFactory.makeRetrofitService()
+        val activity = requireActivity() as? MainActivity
+
+        binding.listProducts.setOnClickListener{
+            if (activity != null) {
+                activity.navigate(AppFragments.PRODUCTS_FRAGMENT)
+            }
+
+
+        }
 
         //TEsting the button and the call to server
         binding.testButton.setOnClickListener {
-            Toast.makeText(activity, "GOAL", Toast.LENGTH_LONG).show()
+          //  Toast.makeText(activity, "GOAL", Toast.LENGTH_LONG).show()
             //TestRetroFit
-        val service = RetrofitServiceFactory.makeRetrofitService()
+       // val service = RetrofitServiceFactory.makeRetrofitService()
 
             lifecycleScope.launch {
                 try {
@@ -67,6 +79,8 @@ private lateinit var test_products: ProductsItem;
                     Log.e("retrofit_error", "Something went wrong", e)
                 }
             }
+
+            ///
         }
     }
 

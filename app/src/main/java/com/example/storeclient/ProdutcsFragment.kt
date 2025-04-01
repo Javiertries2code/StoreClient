@@ -1,6 +1,7 @@
 package com.example.storeclient
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -8,13 +9,22 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
+import com.example.storeclient.data.RetrofitServiceFactory
+import com.example.storeclient.entities.Products
+import com.example.storeclient.entities.ProductsItem
 import com.example.storeclient.ui.login.MyItemRecyclerViewAdapter
 import com.example.storeclient.ui.login.placeholder.PlaceholderContent
+import com.example.storeclient.ui.products.ProductsAdapter
+import kotlinx.coroutines.launch
 
 /**
  * A fragment representing a list of Items.
  */
 class ProdutcsFragment : Fragment() {
+
+    private lateinit var test_products: ProductsItem;
+    private lateinit var list_products: Products;
 
     private var columnCount = 1
 
@@ -25,25 +35,37 @@ class ProdutcsFragment : Fragment() {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
         }
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view = inflater.inflate(R.layout.fragment_produtcs_list, container, false)
 
-        // Set the adapter
+        val service = RetrofitServiceFactory.makeRetrofitService()
+
         if (view is RecyclerView) {
-            with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
+            lifecycleScope.launch {
+                try {
+                    val list_products = service.getAllProducts()
+
+                    with(view) {
+                        layoutManager = when {
+                            columnCount <= 1 -> LinearLayoutManager(context)
+                            else -> GridLayoutManager(context, columnCount)
+                        }
+                        adapter = ProductsAdapter(list_products)
+                    }
+                } catch (e: Exception) {
+                    Log.e("retrofit_error", "Error al obtener productos", e)
                 }
-                adapter = MyItemRecyclerViewAdapter(PlaceholderContent.ITEMS)
             }
         }
+
         return view
     }
+
+
 
     companion object {
 
