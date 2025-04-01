@@ -1,58 +1,81 @@
 package com.example.storeclient
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import androidx.lifecycle.lifecycleScope
+import com.example.storeclient.data.RetrofitServiceFactory
+import com.example.storeclient.entities.Products
+import com.example.storeclient.entities.ProductsItem
+import com.example.storeclient.entities.Users
+import com.example.storeclient.placeholder.PlaceholderContent
+import com.example.storeclient.ui.products.ProductsAdapter
+import kotlinx.coroutines.launch
 
 /**
- * A simple [Fragment] subclass.
- * Use the [UsersFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * A fragment representing a list of Items.
  */
 class UsersFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+
+    private lateinit var list_products: Users;
+
+    private var columnCount = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            columnCount = it.getInt(ARG_COLUMN_COUNT)
         }
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_users, container, false)
+
+        val view = inflater.inflate(R.layout.fragment_users_list, container, false)
+
+        val service = RetrofitServiceFactory.makeRetrofitService()
+
+        if (view is RecyclerView) {
+            lifecycleScope.launch {
+                try {
+                    val list_users = service.getAllUsers()
+
+                    with(view) {
+                        layoutManager = when {
+                            columnCount <= 1 -> LinearLayoutManager(context)
+                            else -> GridLayoutManager(context, columnCount)
+                        }
+                        adapter = UsersRecyclerViewAdapter(list_users)
+                    }
+                } catch (e: Exception) {
+                    Log.e("retrofit_error", "Error al obtener productos", e)
+                }
+            }
+        }
+
+        return view
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment UsersFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+
+        // TODO: Customize parameter argument names
+        const val ARG_COLUMN_COUNT = "column-count"
+
+        // TODO: Customize parameter initialization
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(columnCount: Int) =
             UsersFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putInt(ARG_COLUMN_COUNT, columnCount)
                 }
             }
     }

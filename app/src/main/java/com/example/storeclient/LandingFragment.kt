@@ -59,7 +59,7 @@ private lateinit var test_products: ProductsItem;
 
         binding.listProducts.setOnClickListener{
             if (activity != null) {
-                activity.navigate(AppFragments.PRODUCTS_FRAGMENT)
+                activity.navigate(AppFragments.USERS_FRAGMENT)
             }
 
 

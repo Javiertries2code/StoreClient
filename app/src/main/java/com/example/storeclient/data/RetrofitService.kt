@@ -3,6 +3,8 @@ package com.example.storeclient.data
 import androidx.compose.ui.graphics.vector.Path
 import com.example.storeclient.entities.Products
 import com.example.storeclient.entities.ProductsItem
+import com.example.storeclient.entities.Users
+import com.example.storeclient.entities.UsersItem
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -16,7 +18,15 @@ interface RetrofitService {
 
     @GET("products")
     suspend fun getAllProducts(): Products
+
+
+@GET("users/{id}")
+suspend fun getOneUser(@Path("id") id: String): UsersItem
+
+@GET("users")
+suspend fun getAllUsers(): Users
 }
+
 
 object RetrofitServiceFactory {
     fun makeRetrofitService(): RetrofitService {
