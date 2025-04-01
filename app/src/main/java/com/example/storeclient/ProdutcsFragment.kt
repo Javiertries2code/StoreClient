@@ -5,27 +5,23 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.storeclient.data.RetrofitServiceFactory
-import com.example.storeclient.entities.Products
 import com.example.storeclient.entities.ProductsItem
 import com.example.storeclient.ui.products.ProductsAdapter
-import kotlinx.coroutines.launch
+import com.example.storeclient.ui.viewmodels.ProductsViewModel
 
-/**
- * A fragment representing a list of Items.
- */
 class ProdutcsFragment : Fragment() {
 
-    private lateinit var list_products: Products
     private var columnCount = 1
     private lateinit var recyclerView: RecyclerView
     private lateinit var productsAdapter: ProductsAdapter
+    private val viewModel: ProductsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,17 +46,14 @@ class ProdutcsFragment : Fragment() {
         else
             GridLayoutManager(context, columnCount)
 
-        val service = RetrofitServiceFactory.makeRetrofitService()
+        productsAdapter = ProductsAdapter()
+        recyclerView.adapter = productsAdapter
 
-        lifecycleScope.launch {
-            try {
-                list_products = service.getAllProducts()
-                productsAdapter = ProductsAdapter(list_products)
-                recyclerView.adapter = productsAdapter
-            } catch (e: Exception) {
-                Log.e("retrofit_error", "Error al obtener productos", e)
-            }
+        viewModel.products.observe(viewLifecycleOwner) { productList ->
+            productsAdapter.submitList(productList)
         }
+
+        viewModel.loadProducts()
 
         val swipeCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
             override fun onMove(
@@ -71,14 +64,12 @@ class ProdutcsFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                val product = list_products[position]
+                val product = productsAdapter.currentList[position]
 
                 when (direction) {
-                    ItemTouchHelper.LEFT -> {
-                        Log.i("Swipe", "Swiped LEFT on ${product.name}")
-                    }
-                    ItemTouchHelper.RIGHT -> {
-                        Log.i("Swipe", "Swiped RIGHT on ${product.name}")
+                    ItemTouchHelper.LEFT, ItemTouchHelper.RIGHT -> {
+                        viewModel.deleteProduct(product.productId)
+                        Toast.makeText(requireContext(), "Producto eliminado", Toast.LENGTH_SHORT).show()
                     }
                 }
 

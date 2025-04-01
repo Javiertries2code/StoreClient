@@ -8,7 +8,10 @@ import com.example.storeclient.entities.UsersItem
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface RetrofitService {
@@ -20,11 +23,17 @@ interface RetrofitService {
     suspend fun getAllProducts(): Products
 
 
-@GET("users/{id}")
-suspend fun getOneUser(@Path("id") id: String): UsersItem
+    @GET("users/{id}")
+    suspend fun getOneUser(@Path("id") id: String): UsersItem
 
-@GET("users")
-suspend fun getAllUsers(): Users
+    @GET("users")
+    suspend fun getAllUsers(): Users
+
+    @DELETE("products/{id}")
+    suspend fun deleteProduct(@Path("id") productId: Int)
+
+    @POST("products")
+    suspend fun addProduct(@Body newProduct: ProductsItem)
 }
 
 
