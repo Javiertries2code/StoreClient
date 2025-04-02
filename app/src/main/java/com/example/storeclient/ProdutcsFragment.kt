@@ -67,9 +67,13 @@ class ProdutcsFragment : Fragment() {
                 val product = productsAdapter.currentList[position]
 
                 when (direction) {
-                    ItemTouchHelper.LEFT, ItemTouchHelper.RIGHT -> {
+                    ItemTouchHelper.LEFT-> {
                         viewModel.deleteProduct(product.productId)
                         Toast.makeText(requireContext(), "Producto eliminado", Toast.LENGTH_SHORT).show()
+                    }
+                    ItemTouchHelper.RIGHT -> {
+                        viewModel.addProduct(product.productId)
+                        Toast.makeText(requireContext(), "Producto anadido", Toast.LENGTH_SHORT).show()
                     }
                 }
 

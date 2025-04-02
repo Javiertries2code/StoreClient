@@ -29,11 +29,11 @@ interface RetrofitService {
     @GET("users")
     suspend fun getAllUsers(): Users
 
-    @DELETE("products/{id}")
+    @POST("products/minus/{id}")
     suspend fun deleteProduct(@Path("id") productId: Int)
 
-    @POST("products")
-    suspend fun addProduct(@Body newProduct: ProductsItem)
+    @POST("products/plus/{id}")
+    suspend fun addProduct(@Path("id") productId: Int)
 }
 
 

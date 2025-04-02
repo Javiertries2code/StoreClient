@@ -38,10 +38,10 @@ class ProductsViewModel : ViewModel() {
         }
     }
 
-    fun addProduct(newProduct: ProductsItem) {
+    fun addProduct(productId: Int) {
         viewModelScope.launch {
             try {
-                service.addProduct(newProduct)
+                service.addProduct(productId)
                 loadProducts() // recarga productos después de añadir
             } catch (e: Exception) {
                 Log.e("ProductsViewModel", "Error al añadir producto", e)
