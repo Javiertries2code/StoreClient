@@ -1,5 +1,6 @@
 package com.example.storeclient.ui.products
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.storeclient.R
+import com.example.storeclient.entities.ProductLevel
 import com.example.storeclient.entities.ProductsItem
 
 
@@ -16,9 +18,27 @@ class ProductsAdapter :
 
     class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val name = view.findViewById<TextView>(R.id.product_name)
+        private val amount = view.findViewById<TextView>(R.id.product_amount)
+        private val minimmun_amount = view.findViewById<TextView>(R.id.min_amount)
+
 
         fun bind(item: ProductsItem) {
             name.text = item.name
+            amount.text = item.amount.toString()
+            if(item.amount < item.minimumAmount) {
+                minimmun_amount.text = "Bajo Stock"
+                minimmun_amount.setTextColor(Color.RED)
+                amount.setTextColor(Color.RED)
+                name.setTextColor(Color.RED)
+            }
+//            else if(item.amount < ProductLevel.MEDIUM.thresold) {
+//                amount.setTextColor(Color.YELLOW)
+//                name.setTextColor(Color.YELLOW)
+//            }
+//            else if(item.amount > ProductLevel.HIGH.thresold) {
+//                amount.setTextColor(Color.GREEN)
+//                name.setTextColor(Color.GREEN)
+//            }
         }
     }
 
