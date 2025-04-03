@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import com.example.storeclient.AppFragments
+import com.example.storeclient.MainActivity
 import com.example.storeclient.databinding.FragmentLoginBinding
 
 import com.example.storeclient.R
@@ -117,6 +120,14 @@ class LoginFragment : Fragment() {
         // TODO : initiate successful logged in experience
         val appContext = context?.applicationContext ?: return
         Toast.makeText(appContext, welcome, Toast.LENGTH_LONG).show()
+
+
+            val activity = requireActivity() as? MainActivity
+        Log.d("login", "login Fragment -->succesfull")
+// TODO : SAVED in preferences or something
+            if (activity != null) {
+                activity.navigate(AppFragments.USERS_FRAGMENT)
+                  }
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {

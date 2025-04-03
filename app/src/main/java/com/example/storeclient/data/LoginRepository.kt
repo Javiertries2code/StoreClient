@@ -1,5 +1,8 @@
 package com.example.storeclient.data
 
+import android.util.Log
+import com.example.storeclient.AppFragments
+import com.example.storeclient.MainActivity
 import com.example.storeclient.model.LoggedInUser
 
 /**
@@ -27,12 +30,18 @@ class LoginRepository(val dataSource: LoginDataSource) {
         dataSource.logout()
     }
 
-    fun login(username: String, password: String): Result<LoggedInUser> {
+     suspend fun login(username: String, password: String): Result<LoggedInUser> {
         // handle login
+
+
         val result = dataSource.login(username, password)
 
         if (result is Result.Success) {
             setLoggedInUser(result.data)
+            Log.d("login", "login repository -->succesfull")
+            Log.d("login", "login repository -->succesfull")
+
+
         }
 
         return result

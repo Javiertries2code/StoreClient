@@ -16,7 +16,7 @@ import com.example.storeclient.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
-
+import com.example.storeclient.ui.login.LoginFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -33,10 +33,10 @@ class MainActivity : AppCompatActivity() {
         //seeting up fragment
         if (savedInstanceState == null) {
 
-
+////HERE I fit it the  initial fragment, testing login now, it whould be landing
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                replace<LandingFragment>(R.id.fragmentContainer)
+                replace<LoginFragment>(R.id.fragmentContainer)
 
             }
         }

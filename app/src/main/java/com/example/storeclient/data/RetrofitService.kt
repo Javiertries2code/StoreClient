@@ -5,6 +5,8 @@ import com.example.storeclient.entities.Products
 import com.example.storeclient.entities.ProductsItem
 import com.example.storeclient.entities.Users
 import com.example.storeclient.entities.UsersItem
+import com.example.storeclient.model.LoggedInUser
+import com.example.storeclient.model.LoginRequest
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -15,6 +17,10 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface RetrofitService {
+
+    @POST("auth/login")
+    suspend fun login(@Body request: LoginRequest): LoggedInUser
+
 
     @GET("products/{id}")
     suspend fun getOneProduct(@Path("id") id: String): ProductsItem
