@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.storeclient.R
 import com.example.storeclient.entities.ProductLevel
 import com.example.storeclient.entities.ProductsItem
+import org.json.JSONObject.NULL
 
 
 class ProductsAdapter :
@@ -20,21 +22,28 @@ class ProductsAdapter :
         private val name = view.findViewById<TextView>(R.id.product_name)
         private val amount = view.findViewById<TextView>(R.id.product_amount)
         private val minimmun_amount = view.findViewById<TextView>(R.id.min_amount)
-
+        private val image = view.findViewById<ImageView>(R.id.product_image)
 
         fun bind(item: ProductsItem) {
             name.text = item.name
             amount.text = item.amount.toString()
+            if(item.image == NULL)
+                image.setImageResource(R.drawable.cerveza)
+//            else
+//                image.setImageResource(item.image)
+            //PENDING OF INSTALLING PICASO LIBRARY AND LOAD db
+
+
             if(item.amount < item.minimumAmount) {
                 minimmun_amount.text = "Bajo Stock"
                 minimmun_amount.setTextColor(Color.RED)
                 amount.setTextColor(Color.RED)
                 name.setTextColor(Color.RED)
             }
-//            else if(item.amount < ProductLevel.MEDIUM.thresold) {
-//                amount.setTextColor(Color.YELLOW)
-//                name.setTextColor(Color.YELLOW)
-//            }
+            else {
+                amount.setTextColor(Color.BLACK)
+               name.setTextColor(Color.BLACK)
+           }
 //            else if(item.amount > ProductLevel.HIGH.thresold) {
 //                amount.setTextColor(Color.GREEN)
 //                name.setTextColor(Color.GREEN)
