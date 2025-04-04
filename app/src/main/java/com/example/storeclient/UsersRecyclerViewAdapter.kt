@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 
@@ -55,6 +56,7 @@ class UsersRecyclerViewAdapter(
     inner class ViewHolder(binding: FragmentUsersBinding) : RecyclerView.ViewHolder(binding.root) {
         val idView: TextView = binding.itemNumber
         val contentView: TextView = binding.content
+      //  val userImage: ImageView = binding.user_image
 
         override fun toString(): String {
             return super.toString() + " '" + contentView.text + "'"

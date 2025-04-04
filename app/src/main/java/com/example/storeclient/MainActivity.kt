@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 ////HERE I fit it the  initial fragment, testing login now, it whould be landing
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                replace<LoginFragment>(R.id.fragmentContainer)
+                replace<UsersFragment>(R.id.fragmentContainer, )
 
             }
         }

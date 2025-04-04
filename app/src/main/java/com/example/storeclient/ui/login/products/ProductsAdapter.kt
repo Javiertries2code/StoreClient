@@ -43,7 +43,11 @@ class ProductsAdapter :
             else {
                 amount.setTextColor(Color.BLACK)
                name.setTextColor(Color.BLACK)
-           }
+                minimmun_amount.text = "Stock OK"
+                minimmun_amount.setTextColor(Color.GREEN)
+
+
+            }
 //            else if(item.amount > ProductLevel.HIGH.thresold) {
 //                amount.setTextColor(Color.GREEN)
 //                name.setTextColor(Color.GREEN)

@@ -18,7 +18,7 @@ import com.example.storeclient.ui.viewmodels.ProductsViewModel
 
 class ProdutcsFragment : Fragment() {
 
-    private var columnCount = 1
+    private var columnCount = 4
     private lateinit var recyclerView: RecyclerView
     private lateinit var productsAdapter: ProductsAdapter
     private val viewModel: ProductsViewModel by viewModels()

@@ -26,7 +26,7 @@ class UsersFragment : Fragment() {
 
     private lateinit var list_products: Users;
 
-    private var columnCount = 1
+    private var columnCount = 4
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
