@@ -49,6 +49,7 @@ dependencies {
 // fragments
     implementation(libs.androidx.fragment.ktx) // o la versión más reciente
 
+    //
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -60,6 +61,9 @@ dependencies {
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.ui.android)
+    implementation(libs.androidx.drawerlayout)
+    implementation(libs.appcompat)
+    implementation(libs.google.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
