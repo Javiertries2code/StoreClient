@@ -29,7 +29,7 @@
             android:layout_weight="1" />
     </LinearLayout>
 
-    <!-- Drawer lateral derecho -->
+    <!-- Drawer lateral derecho con botones funcionales -->
     <LinearLayout
         android:id="@+id/base_drawer"
         android:layout_width="280dp"
@@ -39,14 +39,28 @@
         android:background="@android:color/white"
         android:padding="16dp">
 
-        <!-- Contenido del drawer -->
-        <TextView
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/nav_users"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Drawer menu"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:text="Usuarios" />
 
+        <Button
+            android:id="@+id/nav_products"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Productos" />
+
+        <Button
+            android:id="@+id/nav_dispatch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Albaranes" />
+
+        <Button
+            android:id="@+id/nav_inventory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Inventario" />
     </LinearLayout>
 </androidx.drawerlayout.widget.DrawerLayout>
-

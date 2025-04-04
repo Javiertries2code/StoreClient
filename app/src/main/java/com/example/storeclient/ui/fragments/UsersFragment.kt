@@ -1,4 +1,4 @@
-package com.example.storeclient
+package com.example.storeclient.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import androidx.lifecycle.lifecycleScope
+import com.example.storeclient.R
 import com.example.storeclient.data.RetrofitServiceFactory
 import com.example.storeclient.entities.Users
 import com.example.storeclient.ui.adapters.UsersRecyclerViewAdapter

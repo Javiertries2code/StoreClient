@@ -1,7 +1,6 @@
-package com.example.storeclient
+package com.example.storeclient.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
@@ -9,10 +8,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.storeclient.ui.base.BaseFragment
-import com.example.storeclient.ui.products.ProductsAdapter
+import com.example.storeclient.ui.adapters.ProductsAdapter
 import com.example.storeclient.ui.viewmodels.ProductsViewModel
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 import androidx.fragment.app.viewModels
 import com.example.storeclient.R
 

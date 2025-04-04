@@ -1,4 +1,4 @@
-package com.example.storeclient.ui.products
+package com.example.storeclient.ui.adapters
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.storeclient.R
-import com.example.storeclient.entities.ProductLevel
 import com.example.storeclient.entities.ProductsItem
 import org.json.JSONObject.NULL
 

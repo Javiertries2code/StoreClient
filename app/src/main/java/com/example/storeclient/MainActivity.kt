@@ -4,19 +4,14 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.commit
-import androidx.lifecycle.lifecycleScope
-import com.example.storeclient.data.RetrofitServiceFactory
 import com.example.storeclient.databinding.ActivityMainBinding
-import kotlinx.coroutines.launch
-import androidx.fragment.app.commit
 import androidx.fragment.app.replace
-import com.example.storeclient.ui.login.LoginFragment
+import com.example.storeclient.ui.fragments.UsersFragment
 
 
 class MainActivity : AppCompatActivity() {

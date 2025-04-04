@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -11,6 +12,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.example.storeclient.R
 import androidx.core.view.GravityCompat
+import com.example.storeclient.AppFragments
+import com.example.storeclient.MainActivity
 
 abstract class BaseFragment(@LayoutRes private val layoutRes: Int) : Fragment() {
 
@@ -36,6 +39,34 @@ abstract class BaseFragment(@LayoutRes private val layoutRes: Int) : Fragment() 
         }
 
         drawerLayout = baseView.findViewById(R.id.base_drawer_layout)
+
+        // Drawer buttons, pending to do the liging thing
+        val navUsers = baseView.findViewById<Button>(R.id.nav_users)
+        val navProducts = baseView.findViewById<Button>(R.id.nav_products)
+        val navDispatch = baseView.findViewById<Button>(R.id.nav_dispatch)
+        val navInventory = baseView.findViewById<Button>(R.id.nav_inventory)
+
+        val activity = requireActivity() as? MainActivity
+
+        navUsers?.setOnClickListener {
+            activity?.navigate(AppFragments.ADMIN_USERS_FRAGMENT)
+            closeDrawer()
+        }
+
+        navProducts?.setOnClickListener {
+            activity?.navigate(AppFragments.PUBLIC_PRODUCTS_FRAGMENT)
+            closeDrawer()
+        }
+
+        navDispatch?.setOnClickListener {
+            activity?.navigate(AppFragments.DISPATCH_NOTE_FRAGMENT)
+            closeDrawer()
+        }
+
+        navInventory?.setOnClickListener {
+            activity?.navigate(AppFragments.INVENTORY_FRAGMENT)
+            closeDrawer()
+        }
 
         return baseView
     }
