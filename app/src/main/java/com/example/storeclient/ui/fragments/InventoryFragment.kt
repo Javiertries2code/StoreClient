@@ -7,8 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.storeclient.R
+import com.example.storeclient.ui.base.BaseFragment
 
-class InventoryFragment : Fragment() {
+class InventoryFragment : BaseFragment(R.layout.fragment_dispatch_note)  {
 
     companion object {
         fun newInstance() = InventoryFragment()
@@ -22,10 +23,5 @@ class InventoryFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.fragment_inventory, container, false)
-    }
+
 }
