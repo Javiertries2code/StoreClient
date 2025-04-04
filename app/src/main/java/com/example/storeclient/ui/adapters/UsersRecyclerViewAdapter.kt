@@ -1,4 +1,4 @@
-package com.example.storeclient
+package com.example.storeclient.ui.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +8,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.storeclient.AppFragments
+import com.example.storeclient.MainActivity
+import com.example.storeclient.R
 import com.example.storeclient.entities.UsersItem
 
 class UsersRecyclerViewAdapter(

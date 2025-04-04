@@ -2,21 +2,21 @@ package com.example.storeclient
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.storeclient.entities.ProductsItem
+import com.example.storeclient.ui.base.BaseFragment
 import com.example.storeclient.ui.products.ProductsAdapter
 import com.example.storeclient.ui.viewmodels.ProductsViewModel
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import androidx.fragment.app.viewModels
+import com.example.storeclient.R
 
-class ProdutcsFragment : Fragment() {
+class ProdutcsFragment : BaseFragment(R.layout.fragment_produtcs_list) {
 
     private var columnCount = 4
     private lateinit var recyclerView: RecyclerView
@@ -28,13 +28,6 @@ class ProdutcsFragment : Fragment() {
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
         }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_produtcs_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -67,7 +60,7 @@ class ProdutcsFragment : Fragment() {
                 val product = productsAdapter.currentList[position]
 
                 when (direction) {
-                    ItemTouchHelper.LEFT-> {
+                    ItemTouchHelper.LEFT -> {
                         viewModel.deleteProduct(product.productId)
                         Toast.makeText(requireContext(), "Producto eliminado", Toast.LENGTH_SHORT).show()
                     }

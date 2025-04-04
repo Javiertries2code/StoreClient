@@ -2,7 +2,6 @@ package com.example.storeclient
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +9,7 @@ import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.example.storeclient.data.RetrofitServiceFactory
 import com.example.storeclient.entities.Users
-import com.example.storeclient.UsersRecyclerViewAdapter
+import com.example.storeclient.ui.adapters.UsersRecyclerViewAdapter
 import com.example.storeclient.ui.base.BaseFragment
 import kotlinx.coroutines.launch
 
