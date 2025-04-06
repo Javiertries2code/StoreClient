@@ -49,7 +49,7 @@ abstract class BaseFragment(@LayoutRes private val layoutRes: Int) : Fragment() 
         val activity = requireActivity() as? MainActivity
 
         navUsers?.setOnClickListener {
-            activity?.navigate(AppFragments.ADMIN_USERS_FRAGMENT)
+            activity?.secureNavigate(AppFragments.ADMIN_USERS_FRAGMENT)
             closeDrawer()
         }
 
@@ -59,12 +59,12 @@ abstract class BaseFragment(@LayoutRes private val layoutRes: Int) : Fragment() 
         }
 
         navDispatch?.setOnClickListener {
-            activity?.navigate(AppFragments.DISPATCH_NOTE_FRAGMENT)
+            activity?.secureNavigate(AppFragments.DISPATCH_NOTE_FRAGMENT)
             closeDrawer()
         }
 
         navInventory?.setOnClickListener {
-            activity?.navigate(AppFragments.INVENTORY_FRAGMENT)
+            activity?.secureNavigate(AppFragments.INVENTORY_FRAGMENT)
             closeDrawer()
         }
 

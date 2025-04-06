@@ -4,6 +4,8 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -11,12 +13,26 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.commit
 import com.example.storeclient.databinding.ActivityMainBinding
 import androidx.fragment.app.replace
+import com.example.storeclient.data.LoginDataSource
+import com.example.storeclient.data.LoginRepository
 import com.example.storeclient.ui.fragments.UsersFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class MainActivity : AppCompatActivity() {
     //binding
     private lateinit var binding: ActivityMainBinding
+
+    //fragmento to navogate afterloggin
+    public lateinit var targetFragment: AppFragments
+
+// as to laod in on successfull login, else, idfk how to pass it from the drawer's clicks
+lateinit var loginRepository: LoginRepository
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,4 +95,46 @@ class MainActivity : AppCompatActivity() {
             .addToBackStack(null)
             .commit()
     }
+
+    /**
+     * this will be the navigating function for protected routes, checking the logging...
+     * Still not sure how i will make it safe  for the goback button
+     * it will checked if user is logged, if not, will safe  the fragment target and navigate after sucessfull login
+     *
+     * gotta protect the intialitaion or it would crash in the first go i believe.
+     */
+    fun secureNavigate(toFragment: AppFragments) {
+
+        Log.d("secureNavigate", "isLoggedIn: ${if (::loginRepository.isInitialized) loginRepository.isLoggedIn else "not initialized"}")
+
+        if (::loginRepository.isInitialized && loginRepository.isLoggedIn) {
+            navigate(toFragment)
+        } else {
+            targetFragment = toFragment
+            navigate(AppFragments.LOGIN_FRAGMENT)
+        }
+    }
+
+    fun logged_limit() {
+        GlobalScope.launch {
+            delay(10 * 20 * 50)
+
+            loginRepository.logout()
+//just to test it, will remove later... or not, who cares
+            withContext(Dispatchers.Main) {
+                Toast.makeText(this@MainActivity, "Session expired", Toast.LENGTH_LONG).show()
+
+              //  navigate(AppFragments.LOGIN_FRAGMENT)
+            }
+        }
+    }
+
+    fun ensureLoginRepository() {
+        if (!::loginRepository.isInitialized) {
+            loginRepository = LoginRepository(LoginDataSource())
+        }
+    }
+
+
+
 }

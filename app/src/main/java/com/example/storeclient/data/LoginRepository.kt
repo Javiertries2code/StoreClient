@@ -11,6 +11,10 @@ import com.example.storeclient.model.LoggedInUser
  */
 
 class LoginRepository(val dataSource: LoginDataSource) {
+//a fit to avoid continuos automatic reconcetion, as for o=some reasons is was continiously loggin in, someloo somewhere is trigerring it
+    var isLocked = false
+
+
 
     // in-memory cache of the loggedInUser object
     var user: LoggedInUser? = null
@@ -26,21 +30,35 @@ class LoginRepository(val dataSource: LoginDataSource) {
     }
 
     fun logout() {
+        Log.d("logout", "Logging out user: ${user?.displayName ?: "unknown"}")
+
         user = null
         dataSource.logout()
+        isLocked = true
+
+        Log.d("logout", "after loging out Logging out user: ${user?.displayName ?: "unknown"}")
+
+    }
+
+    fun unlock() {
+        isLocked = false
     }
 
      suspend fun login(username: String, password: String): Result<LoggedInUser> {
-        // handle login
 
 
-        val result = dataSource.login(username, password)
+         if (isLocked) {
+             Log.d("LoginRepository", "Login is locked!")
+             return Result.Error(Exception("Login is locked"))
+         }
+
+
+         val result = dataSource.login(username, password)
 
         if (result is Result.Success) {
             setLoggedInUser(result.data)
             Log.d("login", "login repository -->succesfull")
-            Log.d("login", "login repository -->succesfull")
-
+            isLocked = true
 
         }
 

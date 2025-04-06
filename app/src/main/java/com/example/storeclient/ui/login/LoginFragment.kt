@@ -44,8 +44,25 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
-            .get(LoginViewModel::class.java)
+
+        loginViewModel = ViewModelProvider(
+            this,
+            LoginViewModelFactory.LoginViewModelFactory(requireActivity() as MainActivity)
+        ).get(LoginViewModel::class.java)
+
+        // Unlock login in case it was locked from a previous session
+        loginViewModel.getRepository().unlock()
+
+        super.onViewCreated(view, savedInstanceState)
+
+        // Clear the fileds, for some reason, everytime i was loging out, then it was loggin in itself... perhaps this way will send to loging
+        binding.username.text.clear()
+        binding.password.text.clear()
+
+        loginViewModel = ViewModelProvider(
+            this,
+            LoginViewModelFactory.LoginViewModelFactory(requireActivity() as MainActivity)
+        ).get(LoginViewModel::class.java)
 
         val usernameEditText = binding.username
         val passwordEditText = binding.password
@@ -75,6 +92,9 @@ class LoginFragment : Fragment() {
                 }
                 loginResult.success?.let {
                     updateUiWithUser(it)
+                    //another try to stop the continuos login
+                    //as it was in a loop not triggered by any botton
+                    loginViewModel.clearLoginResult()
                 }
             })
 
@@ -115,19 +135,25 @@ class LoginFragment : Fragment() {
         }
     }
 
+    /**
+     * in here, after successfull loggin, will save it, callong the delayed 10 min logout, then navigate to the saved target fragment
+     */
     private fun updateUiWithUser(model: LoggedInUserView) {
         val welcome = getString(R.string.welcome) + model.displayName
         // TODO : initiate successful logged in experience
         val appContext = context?.applicationContext ?: return
         Toast.makeText(appContext, welcome, Toast.LENGTH_LONG).show()
 
+        binding.username.text.clear()
+        binding.password.text.clear()
 
-            val activity = requireActivity() as? MainActivity
+        val activity = requireActivity() as? MainActivity
         Log.d("login", "login Fragment -->succesfull")
-// TODO : SAVED in preferences or something
-            if (activity != null) {
-                activity.navigate(AppFragments.USERS_FRAGMENT)
-                  }
+        //So if everything goes fine, it will navigate later on to the targetfragment  saved before calling login
+        if (activity != null) {
+            activity.logged_limit()
+            activity.navigate(activity.targetFragment)
+        }
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {
@@ -137,6 +163,9 @@ class LoginFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        // Clear the fileds, for some reason, everytime i was loging out, then it was loggin in itself... perhaps this way will send to loging
+        binding.username.text.clear()
+        binding.password.text.clear()
         _binding = null
     }
 }
