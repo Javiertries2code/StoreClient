@@ -1,6 +1,8 @@
 package com.example.storeclient.data
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.storeclient.AppFragments
 import com.example.storeclient.MainActivity
 import com.example.storeclient.model.LoggedInUser
@@ -29,16 +31,36 @@ class LoginRepository(val dataSource: LoginDataSource) {
         user = null
     }
 
-    fun logout() {
-        Log.d("logout", "Logging out user: ${user?.displayName ?: "unknown"}")
+    private val _loggedInUser = MutableLiveData<LoggedInUser?>()
+    val loggedInUser: LiveData<LoggedInUser?> get() = _loggedInUser
 
-        user = null
-        dataSource.logout()
-        isLocked = true
-
-        Log.d("logout", "after loging out Logging out user: ${user?.displayName ?: "unknown"}")
-
+    private fun setLoggedInUser(user: LoggedInUser) {
+        this.user = user
+        _loggedInUser.postValue(user)
+        // If user credentials will be cached in local storage, it is recommended it be encrypted
+        // @see https://developer.android.com/training/articles/keystore
     }
+
+    fun logout() {
+        user = null
+        _loggedInUser.postValue(null)
+        isLocked = true
+        dataSource.logout()
+    }
+
+
+
+//
+//    fun logout() {
+//        Log.d("logout", "Logging out user: ${user?.displayName ?: "unknown"}")
+//
+//        user = null
+//        dataSource.logout()
+//        isLocked = true
+//
+//        Log.d("logout", "after loging out Logging out user: ${user?.displayName ?: "unknown"}")
+//
+//    }
 
     fun unlock() {
         isLocked = false
@@ -65,9 +87,5 @@ class LoginRepository(val dataSource: LoginDataSource) {
         return result
     }
 
-    private fun setLoggedInUser(loggedInUser: LoggedInUser) {
-        this.user = loggedInUser
-        // If user credentials will be cached in local storage, it is recommended it be encrypted
-        // @see https://developer.android.com/training/articles/keystore
-    }
+
 }

@@ -53,6 +53,8 @@ class LoginFragment : Fragment() {
         // Unlock login in case it was locked from a previous session
         loginViewModel.getRepository().unlock()
 
+
+
         super.onViewCreated(view, savedInstanceState)
 
         // Clear the fileds, for some reason, everytime i was loging out, then it was loggin in itself... perhaps this way will send to loging
