@@ -30,8 +30,8 @@ class ProductsViewModel : ViewModel() {
     fun deleteProduct(productId: Int) {
         viewModelScope.launch {
             try {
-                service.deleteProduct(productId)
-                loadProducts() // recarga productos después de borrar
+                service.deleteProduct(productId.toString())
+                loadProducts() // I load products once again, though the list adapter will find those different and replace them
             } catch (e: Exception) {
                 Log.e("ProductsViewModel", "Error al eliminar producto", e)
             }
@@ -41,10 +41,32 @@ class ProductsViewModel : ViewModel() {
     fun addProduct(productId: Int) {
         viewModelScope.launch {
             try {
-                service.addProduct(productId)
-                loadProducts() // recarga productos después de añadir
+                service.addProduct(productId.toString())
+                loadProducts() // I load products once again, though the list adapter will find those different and replace them
             } catch (e: Exception) {
                 Log.e("ProductsViewModel", "Error al añadir producto", e)
+            }
+        }
+    }
+
+    fun editProduct(updatedProduct: ProductsItem) {
+        viewModelScope.launch {
+            try {
+                service.updateProduct(updatedProduct.productId.toString(), updatedProduct)
+                loadProducts()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun eraseProduct(productId: Int) {
+        viewModelScope.launch {
+            try {
+                service.eraseProduct(productId.toString())
+                loadProducts() // I load products once again, though the list adapter will find those different and replace them
+            } catch (e: Exception) {
+                Log.e("ProductsViewModel", "Error al eliminar producto", e)
             }
         }
     }

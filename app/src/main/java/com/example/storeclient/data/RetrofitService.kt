@@ -13,7 +13,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface RetrofitService {
@@ -35,20 +37,34 @@ interface RetrofitService {
     @GET("users")
     suspend fun getAllUsers(): Users
 
+    @DELETE("products/{id}")
+    suspend fun eraseProduct(@Path("id") productId: String)
+
+
     @POST("products/minus/{id}")
-    suspend fun deleteProduct(@Path("id") productId: Int)
+    suspend fun deleteProduct(@Path("id") productId: String)
 
     @POST("products/plus/{id}")
-    suspend fun addProduct(@Path("id") productId: Int)
-}
+    suspend fun addProduct(@Path("id") productId: String)
 
+    @PATCH("products/update/{id}")
+    suspend fun updateProduct(@Path("id") productId: String, @Body product: ProductsItem)
+
+
+}
 
 object RetrofitServiceFactory {
+    private var instance: RetrofitService? = null
+
     fun makeRetrofitService(): RetrofitService {
-        return Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8099/api/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(RetrofitService::class.java)
+        if (instance == null) {
+            instance = Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:8099/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(RetrofitService::class.java)
+        }
+        return instance!!
     }
 }
+
