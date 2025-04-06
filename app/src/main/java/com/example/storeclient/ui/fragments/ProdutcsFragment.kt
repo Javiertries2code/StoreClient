@@ -46,6 +46,29 @@ class ProdutcsFragment : BaseFragment(R.layout.fragment_produtcs_list) {
         viewModel.loadProducts()
 
         val swipeCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+//So this ensures it cant swipe when stock goes downt to 0
+
+            override fun getMovementFlags(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder
+            ): Int {
+                val position = viewHolder.adapterPosition
+                val product = productsAdapter.currentList.getOrNull(position)
+
+                return if (product != null) {
+                    if (product.amount <= 0) {
+                        // Solo permitir swipe a la derecha
+                        makeMovementFlags(0, ItemTouchHelper.RIGHT)
+                    } else {
+                        // Permitir swipe a izquierda y derecha
+                        makeMovementFlags(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
+                    }
+                } else {
+                    0
+                }
+            }
+
+
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -58,6 +81,11 @@ class ProdutcsFragment : BaseFragment(R.layout.fragment_produtcs_list) {
 
                 when (direction) {
                     ItemTouchHelper.LEFT -> {
+//                        if(product.amount == 0){
+//                            Toast.makeText(requireContext(), "Stock 0, no se puede eliminar", Toast.LENGTH_SHORT).show()
+//                            return
+//                        }
+
                         viewModel.deleteProduct(product.productId)
                         Toast.makeText(requireContext(), "Producto eliminado", Toast.LENGTH_SHORT).show()
                     }
