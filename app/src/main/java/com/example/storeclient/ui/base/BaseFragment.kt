@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -45,8 +46,14 @@ abstract class BaseFragment(@LayoutRes private val layoutRes: Int) : Fragment() 
         val navProducts = baseView.findViewById<Button>(R.id.nav_products)
         val navDispatch = baseView.findViewById<Button>(R.id.nav_dispatch)
         val navInventory = baseView.findViewById<Button>(R.id.nav_inventory)
+        val buttonHome = baseView.findViewById<ImageButton>(R.id.buttonHome)
 
         val activity = requireActivity() as? MainActivity
+
+        buttonHome?.setOnClickListener {
+            activity?.navigate(AppFragments.USERS_FRAGMENT)
+            closeDrawer()
+        }
 
         navUsers?.setOnClickListener {
             activity?.secureNavigate(AppFragments.ADMIN_USERS_FRAGMENT)
