@@ -1,5 +1,6 @@
 package com.example.storeclient.ui.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,25 +38,29 @@ class PublicProductsAdapter(private val viewModel: ProductsViewModel) :
             // TODO: load product.image into binding.productImage using Glide or similar if needed
 
             binding.buttonEdit.setOnClickListener {
-                var check_enabled = 0
-                if(binding.productEnabled.isChecked)
-                    check_enabled = 1
+                Log.d("PRODUCTO", "Edit button clicked")
+                try {
+                    val name = binding.productName.text.toString()
+                    val minAmount = binding.productMinimum.text.toString().toIntOrNull()
+                    val isEnabled = binding.productEnabled.isChecked
 
-                val updatedProduct = product.copy(
-                    name = binding.productName.text.toString(),
-                    minimumAmount = binding.productMinimum.text.toString().toIntOrNull() ?: product.minimumAmount,
+                    Log.d("PRODUCTO", "Form values: name=$name, minAmount=$minAmount, enabled=$isEnabled")
 
-                      enabled = check_enabled
-                )
-                viewModel.editProduct(updatedProduct)
-                Toast.makeText(binding.root.context, "Producto editado", Toast.LENGTH_SHORT).show()
+                    val updatedProduct = product.copy(
+                        name = name,
+                        minimumAmount = minAmount ?: product.minimumAmount,
+                        enabled = if (isEnabled) 1 else 0
+                    )
+
+                    Log.d("PRODUCTO", "Calling editProduct with: $updatedProduct")
+                    viewModel.editProduct(updatedProduct)
+                    Toast.makeText(binding.root.context, "Producto editado", Toast.LENGTH_SHORT).show()
+                } catch (e: Exception) {
+                    Log.e("PRODUCTO", "Edit failed", e)
+                }
             }
 
-            binding.buttonDisable.setOnClickListener {
-                val updatedProduct = product.copy(enabled = 0)//as for what mysql uses
-                viewModel.editProduct(updatedProduct)
-                Toast.makeText(binding.root.context, "Producto deshabilitado", Toast.LENGTH_SHORT).show()
-            }
+
 
             binding.buttonDelete.setOnClickListener {
                 viewModel.eraseProduct(product.productId)
