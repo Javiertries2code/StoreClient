@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- Image button para sacar foto -->
+        <ImageButton
+            android:id="@+id/image_button"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/vino"
+            android:scaleType="centerCrop"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Add photo" />
+
+        <!-- CheckBox para enabled -->
+        <CheckBox
+            android:id="@+id/checkbox_enabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enabled"
+            android:checked="true"
+            android:layout_marginTop="16dp" />
+
+        <!-- Nombre del producto -->
+        <EditText
+            android:id="@+id/edit_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Name"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <!-- Cantidad -->
+        <EditText
+            android:id="@+id/edit_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Amount"
+            android:inputType="number"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <!-- Mínima cantidad -->
+        <EditText
+            android:id="@+id/edit_minimum_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Minimum Amount"
+            android:inputType="number"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <!-- Coste -->
+        <EditText
+            android:id="@+id/edit_cost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Cost"
+            android:inputType="numberDecimal"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <!-- Precio de venta -->
+        <EditText
+            android:id="@+id/edit_retail_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Retail Price"
+            android:inputType="numberDecimal"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <!-- Temporada (season) -->
+        <EditText
+            android:id="@+id/edit_season"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Season (0 = no, 1 = yes)"
+            android:inputType="number"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <!-- Botón para guardar -->
+        <Button
+            android:id="@+id/button_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save Product"
+            android:layout_marginTop="24dp" />
+
+    </LinearLayout>
+</ScrollView>

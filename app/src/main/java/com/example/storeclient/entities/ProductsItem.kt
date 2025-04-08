@@ -7,7 +7,7 @@ data class ProductsItem(
     val image: Any? = null,
     val minimumAmount: Int,
     val name: String,
-    val productId: Int,
+    val productId: Int? = null,
     val retailPrice: Double,
     val season: Int
 )

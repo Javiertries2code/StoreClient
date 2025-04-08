@@ -3,6 +3,7 @@ package com.example.storeclient
 
 
 import androidx.fragment.app.Fragment
+import com.example.storeclient.ui.fragments.Add_Product_Fragment
 import com.example.storeclient.ui.fragments.AdminFragment
 import com.example.storeclient.ui.fragments.AdminUsersFragment
 import com.example.storeclient.ui.fragments.DispatchNoteFragment
@@ -22,6 +23,7 @@ enum class AppFragments(val fragmentClass: Class<out Fragment>) {
     ADMIN_USERS_FRAGMENT(AdminUsersFragment::class.java),
     DISPATCH_NOTE_FRAGMENT(DispatchNoteFragment::class.java),
     INVENTORY_FRAGMENT(InventoryFragment::class.java),
+    ADD_PRODUCT_FRAGMENT(Add_Product_Fragment::class.java),
     PUBLIC_PRODUCTS_FRAGMENT(PublicProductsFragment::class.java);
 
 

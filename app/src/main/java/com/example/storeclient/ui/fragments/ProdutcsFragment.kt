@@ -2,6 +2,7 @@ package com.example.storeclient.ui.fragments
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -11,7 +12,9 @@ import com.example.storeclient.ui.base.BaseFragment
 import com.example.storeclient.ui.adapters.ProductsAdapter
 import com.example.storeclient.ui.viewmodels.ProductsViewModel
 import androidx.fragment.app.viewModels
+import com.example.storeclient.AppFragments
 import com.example.storeclient.R
+import com.example.storeclient.utils.navigateTo
 
 class ProdutcsFragment : BaseFragment(R.layout.fragment_produtcs_list) {
 
@@ -27,6 +30,9 @@ class ProdutcsFragment : BaseFragment(R.layout.fragment_produtcs_list) {
         }
     }
 
+
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -41,6 +47,15 @@ class ProdutcsFragment : BaseFragment(R.layout.fragment_produtcs_list) {
 
         viewModel.products.observe(viewLifecycleOwner) { productList ->
             productsAdapter.submitList(productList)
+        }
+
+        //clicklisteners del los botones de crear productos
+        view.findViewById<Button>(R.id.add_product_top).setOnClickListener {
+            navigateTo(AppFragments.ADD_PRODUCT_FRAGMENT)
+
+        }
+        view.findViewById<Button>(R.id.add_product_bottom).setOnClickListener {
+            navigateTo(AppFragments.ADD_PRODUCT_FRAGMENT)
         }
 
         viewModel.loadProducts()
@@ -81,16 +96,12 @@ class ProdutcsFragment : BaseFragment(R.layout.fragment_produtcs_list) {
 
                 when (direction) {
                     ItemTouchHelper.LEFT -> {
-//                        if(product.amount == 0){
-//                            Toast.makeText(requireContext(), "Stock 0, no se puede eliminar", Toast.LENGTH_SHORT).show()
-//                            return
-//                        }
 
-                        viewModel.deleteProduct(product.productId)
+                        viewModel.deleteProduct(product.productId!!)
                         Toast.makeText(requireContext(), "Producto eliminado", Toast.LENGTH_SHORT).show()
                     }
                     ItemTouchHelper.RIGHT -> {
-                        viewModel.addProduct(product.productId)
+                        viewModel.addProduct(product.productId!!)
                         Toast.makeText(requireContext(), "Producto anadido", Toast.LENGTH_SHORT).show()
                     }
                 }

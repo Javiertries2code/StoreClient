@@ -63,12 +63,11 @@ class PublicProductsAdapter(private val viewModel: ProductsViewModel) :
 
 
             binding.buttonDelete.setOnClickListener {
-                viewModel.eraseProduct(product.productId)
+                viewModel.eraseProduct(product.productId!!)
                 Toast.makeText(binding.root.context, "Producto eliminado", Toast.LENGTH_SHORT).show()
             }
         }
     }
-
     class DiffCallback : DiffUtil.ItemCallback<ProductsItem>() {
         override fun areItemsTheSame(oldItem: ProductsItem, newItem: ProductsItem): Boolean =
             oldItem.productId == newItem.productId
