@@ -14,17 +14,20 @@ import com.example.storeclient.ui.fragments.PublicProductsFragment
 import com.example.storeclient.ui.fragments.UsersFragment
 import com.example.storeclient.ui.login.LoginFragment
 
-enum class AppFragments(val fragmentClass: Class<out Fragment>) {
-    LOGIN_FRAGMENT(LoginFragment::class.java),
-    USERS_FRAGMENT(UsersFragment::class.java),
-    PRODUCTS_FRAGMENT(ProdutcsFragment::class.java),
-    LANDING_FRAGMENT(LandingFragment::class.java),
+enum class AppFragments(
+    val fragmentClass: Class<out Fragment>,
+    val isProtected: Boolean = true // default to protected
+) {
+    LOGIN_FRAGMENT(LoginFragment::class.java, false),
+    LANDING_FRAGMENT(LandingFragment::class.java, false),
+    USERS_FRAGMENT(UsersFragment::class.java, false),
+    PRODUCTS_FRAGMENT(ProdutcsFragment::class.java, false),
     ADMIN_FRAGMENT(AdminFragment::class.java),
     ADMIN_USERS_FRAGMENT(AdminUsersFragment::class.java),
     DISPATCH_NOTE_FRAGMENT(DispatchNoteFragment::class.java),
     INVENTORY_FRAGMENT(InventoryFragment::class.java),
-    ADD_PRODUCT_FRAGMENT(Add_Product_Fragment::class.java),
-    PUBLIC_PRODUCTS_FRAGMENT(PublicProductsFragment::class.java);
+    ADD_PRODUCT_FRAGMENT(Add_Product_Fragment::class.java, false),
+    PUBLIC_PRODUCTS_FRAGMENT(PublicProductsFragment::class.java, true);
 
 
     fun newInstance(): Fragment {
