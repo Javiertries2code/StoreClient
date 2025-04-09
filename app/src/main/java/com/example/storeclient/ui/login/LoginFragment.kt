@@ -21,6 +21,8 @@ import com.example.storeclient.MainActivity
 import com.example.storeclient.databinding.FragmentLoginBinding
 
 import com.example.storeclient.R
+import com.example.storeclient.utils.goToProducts
+import com.example.storeclient.utils.goToUsers
 
 class LoginFragment : Fragment() {
 
@@ -53,6 +55,9 @@ class LoginFragment : Fragment() {
         // Unlock login in case it was locked from a previous session
         loginViewModel.getRepository().unlock()
 
+        view.findViewById<Button>(R.id.go_to_users).setOnClickListener {
+            goToUsers()
+        }
 
 
         super.onViewCreated(view, savedInstanceState)

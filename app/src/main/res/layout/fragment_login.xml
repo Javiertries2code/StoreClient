@@ -60,6 +60,17 @@
         app:layout_constraintTop_toBottomOf="@+id/password"
         app:layout_constraintVertical_bias="0.2" />
 
+    <Button
+        android:id="@+id/go_to_users"
+        android:layout_width="295dp"
+        android:layout_height="35dp"
+        android:text="Home"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login"
+        app:layout_constraintVertical_bias="0.652" />
+
     <ProgressBar
         android:id="@+id/loading"
         android:layout_width="wrap_content"
