@@ -8,9 +8,12 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.storeclient.AppFragments
+import com.example.storeclient.MainActivity
 import com.example.storeclient.databinding.ItemPublicProductBinding
 import com.example.storeclient.entities.ProductsItem
 import com.example.storeclient.ui.viewmodels.ProductsViewModel
+import com.example.storeclient.utils.navigateTo
 
 class PublicProductsAdapter(private val viewModel: ProductsViewModel) :
     ListAdapter<ProductsItem, PublicProductsAdapter.ProductViewHolder>(DiffCallback()) {
@@ -55,6 +58,11 @@ class PublicProductsAdapter(private val viewModel: ProductsViewModel) :
                     Log.d("PRODUCTO", "Calling editProduct with: $updatedProduct")
                     viewModel.editProduct(updatedProduct)
                     Toast.makeText(binding.root.context, "Producto editado", Toast.LENGTH_SHORT).show()
+
+                   //This is not really pretty, and it breaks the independence of the adapter rescpect the a
+                    //activity, but if works by now, it does
+                    val activity = binding.root.context as? MainActivity
+                    activity?.navigate(AppFragments.PRODUCTS_FRAGMENT)
                 } catch (e: Exception) {
                     Log.e("PRODUCTO", "Edit failed", e)
                 }
