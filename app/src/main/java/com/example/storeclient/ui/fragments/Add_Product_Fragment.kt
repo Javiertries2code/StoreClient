@@ -8,12 +8,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.fragment.app.viewModels
+import com.example.storeclient.AppFragments
 import com.example.storeclient.R
 import com.example.storeclient.databinding.FragmentAddProductBinding
 import com.example.storeclient.entities.ProductsItem
 import com.example.storeclient.ui.base.BaseFragment
+import com.example.storeclient.ui.viewmodels.ProductsViewModel
+import com.example.storeclient.utils.navigateTo
 
 class Add_Product_Fragment : BaseFragment(R.layout.fragment_add__product_) {
+    private val viewModel: ProductsViewModel by viewModels()
+
 
     private var _binding: FragmentAddProductBinding? = null
     private val binding get() = _binding!!
@@ -67,10 +73,19 @@ class Add_Product_Fragment : BaseFragment(R.layout.fragment_add__product_) {
             retailPrice = retailPrice,
             season = if (season != 0) 1 else 0,
             enabled = if (enabled) 1 else 0
-            // image is left null
+            // image is left null by now
         )
 
         Toast.makeText(requireContext(), "Product ready to send: $product", Toast.LENGTH_LONG).show()
+        viewModel.createProduct(product);
+        viewModel.saveStatus.observe(viewLifecycleOwner) { success ->
+            if (success) {
+                Toast.makeText(requireContext(), "Product saved successfully!", Toast.LENGTH_SHORT).show()
+                this.navigateTo(AppFragments.PRODUCTS_FRAGMENT)
+            } else {
+                Toast.makeText(requireContext(), "Failed to save product", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onDestroyView() {

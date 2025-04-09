@@ -1,4 +1,4 @@
-package com.example.storeclient.ui.fragments
+package com.example.storeclient.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 

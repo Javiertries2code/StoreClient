@@ -50,6 +50,9 @@ interface RetrofitService {
     @PUT("products/{id}")
     suspend fun updateProduct(@Path("id") productId: String, @Body product: ProductsItem)
 
+   @POST("products")
+    suspend fun createProduct(@Body product: ProductsItem)
+
 
 }
 

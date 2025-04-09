@@ -14,6 +14,10 @@ class ProductsViewModel : ViewModel() {
     private val _products = MutableLiveData<List<ProductsItem>>()
     val products: LiveData<List<ProductsItem>> = _products
 
+    //para saver la respuesta del servidor
+    private val _saveStatus = MutableLiveData<Boolean>()
+    val saveStatus: LiveData<Boolean> = _saveStatus
+
     private val service = RetrofitServiceFactory.makeRetrofitService()
 
     fun loadProducts() {
@@ -67,6 +71,19 @@ class ProductsViewModel : ViewModel() {
                 loadProducts() // I load products once again, though the list adapter will find those different and replace them
             } catch (e: Exception) {
                 Log.e("ProductsViewModel", "Error al eliminar producto", e)
+            }
+        }
+    }
+
+    fun createProduct(product: ProductsItem) {
+        // Aquí guardarías en base de datos o red
+        viewModelScope.launch {
+            try {
+
+                service.createProduct(product)
+                _saveStatus.postValue(true)
+            } catch (e: Exception) {
+                _saveStatus.postValue(false)
             }
         }
     }
