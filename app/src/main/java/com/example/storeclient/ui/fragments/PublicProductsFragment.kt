@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.storeclient.R
@@ -11,6 +12,7 @@ import com.example.storeclient.databinding.FragmentPublicProductsBinding
 import com.example.storeclient.ui.adapters.PublicProductsAdapter
 import com.example.storeclient.ui.base.BaseFragment
 import com.example.storeclient.ui.viewmodels.ProductsViewModel
+import com.example.storeclient.utils.goToProducts
 
 class PublicProductsFragment : BaseFragment(R.layout.fragment_public_products) {
 
@@ -35,6 +37,10 @@ class PublicProductsFragment : BaseFragment(R.layout.fragment_public_products) {
         adapter = PublicProductsAdapter(viewModel)
         binding.publicProductsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.publicProductsRecyclerView.adapter = adapter
+
+        view.findViewById<Button>(R.id.go_to_products).setOnClickListener {
+            goToProducts()
+        }
 
         viewModel.products.observe(viewLifecycleOwner) { productList ->
             adapter.submitList(productList)

@@ -4,7 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:fitsSystemWindows="true"> <!-- This should work with the toolbar drawer,
+    but i will have to go cheap... harcoding to come!!-->
+    <Button
+        android:id="@+id/go_to_products"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancelar"
+        android:layout_marginBottom="8dp" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/publicProductsRecyclerView"
@@ -12,5 +21,4 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:paddingBottom="16dp" />
-
 </LinearLayout>
