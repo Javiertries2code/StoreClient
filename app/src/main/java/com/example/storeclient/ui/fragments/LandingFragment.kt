@@ -59,9 +59,9 @@ class LandingFragment : Fragment() {
 
                     if (isConenected == false) {
                         buttonConnectionChecker?.isEnabled = false
-                        if(myConnection == false){
+                        if(myConnection == true){
                             Toast.makeText(requireContext(), "NO HAY CONECTIVIDAD", Toast.LENGTH_SHORT).show()
-                            myConnection = true
+                            myConnection = false
                         }
                         smartNavigateTo(AppFragments.LANDING_FRAGMENT)
                     } else {
@@ -71,7 +71,6 @@ class LandingFragment : Fragment() {
                             if (activity != null) {
                                 smartNavigateTo(activity.lastFragment)
                                 Log.d("NAVIGATE", "NOTREACHING RECONNECTION navigation")
-
 
                             }
                         }
