@@ -1,13 +1,15 @@
 package com.example.storeclient.ui.fragments
 
 
+import android.content.Context
+import android.graphics.Bitmap
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.example.storeclient.AppFragments
 import com.example.storeclient.R
@@ -17,20 +19,40 @@ import com.example.storeclient.ui.base.BaseFragment
 import com.example.storeclient.ui.viewmodels.ProductsViewModel
 import com.example.storeclient.utils.navigateTo
 
+
 class Add_Product_Fragment : BaseFragment(R.layout.fragment_add__product_) {
     private val viewModel: ProductsViewModel by viewModels()
-
 
     private var _binding: FragmentAddProductBinding? = null
     private val binding get() = _binding!!
 
-    private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { bitmap ->
-        if (bitmap != null) {
-            binding.imageButton.setImageBitmap(bitmap)
-            // Aquí podrías guardar la imagen como Bitmap, Uri o ByteArray si lo necesitas
+    private lateinit var cameraLauncher: ActivityResultLauncher<Void?>
+    private lateinit var permissionLauncher: ActivityResultLauncher<String>
+
+    private var capturedImage: Bitmap? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        // Cámara
+        cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { bitmap ->
+            bitmap?.let {
+                capturedImage = it
+                if (_binding != null) {
+                    binding.imageButton.setImageBitmap(it)
+                }
+            }
+        }
+
+        // Permisos
+        permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                cameraLauncher.launch(null)
+            } else {
+                Toast.makeText(requireContext(), "Camera permission denied", Toast.LENGTH_SHORT).show()
+            }
         }
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,11 +62,20 @@ class Add_Product_Fragment : BaseFragment(R.layout.fragment_add__product_) {
         _binding = FragmentAddProductBinding.bind(actualContentView)
 
         binding.imageButton.setOnClickListener {
-            takePictureLauncher.launch(null)
+            checkCameraPermissionAndLaunch()
         }
 
         binding.buttonSave.setOnClickListener {
             saveProduct()
+        }
+    }
+
+    private fun checkCameraPermissionAndLaunch() {
+        val permission = android.Manifest.permission.CAMERA
+        if (ContextCompat.checkSelfPermission(requireContext(), permission) == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            cameraLauncher.launch(null)
+        } else {
+            permissionLauncher.launch(permission)
         }
     }
 
@@ -74,7 +105,7 @@ class Add_Product_Fragment : BaseFragment(R.layout.fragment_add__product_) {
         )
 
         Toast.makeText(requireContext(), "Product ready to send: $product", Toast.LENGTH_LONG).show()
-        viewModel.createProduct(product);
+        viewModel.createProduct(product)
         viewModel.saveStatus.observe(viewLifecycleOwner) { success ->
             if (success) {
                 Toast.makeText(requireContext(), "Product saved successfully!", Toast.LENGTH_SHORT).show()
@@ -90,49 +121,3 @@ class Add_Product_Fragment : BaseFragment(R.layout.fragment_add__product_) {
         _binding = null
     }
 }
-
-
-/**
- * SI LO DICE CHAT...
- * ✅ 2. El truco del getChildAt(0) — ¿Qué es y por qué lo usamos?
- * 📦 Contexto
- * Tu BaseFragment infla una vista fragment_base.xml, que incluye:
- *
- * Toolbar
- *
- * Drawer
- *
- * Y un FrameLayout (base_content_frame) donde se infla el layout del fragmento real (por ejemplo, fragment_add_product.xml).
- *
- * 🧩 El problema
- * Cuando haces onViewCreated(view: View) en tu fragmento, ese view es la vista raíz de fragment_base.xml, no de fragment_add_product.xml.
- *
- * Pero tú necesitas hacer binding sobre fragment_add_product.xml.
- * Entonces, ¿cómo accedes a ese layout si está embebido dentro del otro?
- *
- * 🪄 El truco: getChildAt(0)
- * kotlin
- * Copy
- * Edit
- * val contentFrame = view.findViewById<ViewGroup>(R.id.base_content_frame)
- * val actualContentView = contentFrame.getChildAt(0)
- * _binding = FragmentAddProductBinding.bind(actualContentView)
- * 🔍 ¿Qué hace esto?
- * view.findViewById(...) busca el FrameLayout que usaste como contenedor (base_content_frame).
- *
- * .getChildAt(0) obtiene la vista inflada dentro de ese contenedor, es decir, tu fragment_add_product.
- *
- * Y finalmente FragmentAddProductBinding.bind(...) enlaza ese layout con tu binding.
- *
- * 🧠 ¿Cuándo se usa?
- * ✅ Cuando estás usando un BaseFragment que infla un layout común (toolbar, drawer, etc.)
- *
- * ✅ Y luego inyectas un fragmento de contenido dentro de un FrameLayout dentro de ese base.
- *
- * ✅ Y estás usando ViewBinding.
- *
- * 📌 Este patrón es común en apps con diseño modular o con layouts que comparten cabecera o navegación.
- *
- * 🚫 ¿Cuándo no es necesario?
- * Si tu fragmento no tiene layout base y solo inflas tu propio XML como root (como un fragmento normal), entonces simplemente harías:
- */
