@@ -3,12 +3,12 @@ package com.example.storeclient
 
 
 import androidx.fragment.app.Fragment
+import com.elorrieta.alumnoclient.LandingFragment
 import com.example.storeclient.ui.fragments.Add_Product_Fragment
 import com.example.storeclient.ui.fragments.AdminFragment
 import com.example.storeclient.ui.fragments.AdminUsersFragment
 import com.example.storeclient.ui.fragments.DispatchNoteFragment
 import com.example.storeclient.ui.fragments.InventoryFragment
-import com.example.storeclient.ui.fragments.LandingFragment
 import com.example.storeclient.ui.fragments.ProdutcsFragment
 import com.example.storeclient.ui.fragments.PublicProductsFragment
 import com.example.storeclient.ui.fragments.UsersFragment

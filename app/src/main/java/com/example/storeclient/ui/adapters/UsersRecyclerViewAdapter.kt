@@ -36,6 +36,7 @@ class UsersRecyclerViewAdapter(
             Log.i("UsersAdapter", "Clicked: ${item.name}")
             Toast.makeText(holder.itemView.context, "Clicked: ${item.name}", Toast.LENGTH_SHORT).show()
             mainActivity.navigate(AppFragments.PRODUCTS_FRAGMENT)
+
         }
     }
 

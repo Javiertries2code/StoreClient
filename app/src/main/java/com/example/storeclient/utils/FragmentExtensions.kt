@@ -5,11 +5,17 @@ import com.example.storeclient.AppFragments
 import com.example.storeclient.MainActivity
 
 fun Fragment.navigateTo(fragment: AppFragments) {
-    (activity as? MainActivity)?.navigate(fragment)
+    val activity = activity as? MainActivity
+    if(fragment != AppFragments.LANDING_FRAGMENT)
+    { activity?.lastFragment = fragment}
+    activity?.navigate(fragment)
 }
 
 fun Fragment.SecureNavigateTo(fragment: AppFragments) {
-    (activity as? MainActivity)?.secureNavigate(fragment)
+    val activity = activity as? MainActivity
+//    if(fragment != AppFragments.LANDING_FRAGMENT)
+//    {  activity?.lastFragment = fragment}
+    activity?.secureNavigate(fragment)
 }
 //Update the AppFRagments to signal is the fragment is protected or not
 fun Fragment.smartNavigateTo(fragment: AppFragments) {

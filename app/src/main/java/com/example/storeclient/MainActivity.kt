@@ -13,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.commit
 import com.example.storeclient.databinding.ActivityMainBinding
 import androidx.fragment.app.replace
+import com.elorrieta.alumnoclient.LandingFragment
 import com.example.storeclient.data.LoginDataSource
 import com.example.storeclient.data.LoginRepository
 import com.example.storeclient.ui.fragments.UsersFragment
@@ -33,6 +34,8 @@ class MainActivity : AppCompatActivity() {
 // as to laod in on successfull login, else, idfk how to pass it from the drawer's clicks
 lateinit var loginRepository: LoginRepository
 
+lateinit var lastFragment: AppFragments
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +50,7 @@ lateinit var loginRepository: LoginRepository
 ////HERE I fit it the  initial fragment, testing login now, it whould be landing
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                replace<UsersFragment>(R.id.fragmentContainer, )
+                replace<LandingFragment>(R.id.fragmentContainer, )
 
             }
         }
@@ -85,11 +88,13 @@ lateinit var loginRepository: LoginRepository
     fun navigate(fragment: AppFragments, args: Bundle? = null) {
         val fragmentManager = supportFragmentManager
         val existingFragment = fragmentManager.findFragmentByTag(fragment.name)
+        if(fragment != AppFragments.LANDING_FRAGMENT)
+        {  lastFragment = fragment}
 
         val fragmentToNavigate = existingFragment ?: fragment.newInstance().apply {
             arguments = args
         }
-
+Log.d("NAVIGATE", lastFragment.toString())
         fragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, fragmentToNavigate, fragment.name)
             .addToBackStack(null)
