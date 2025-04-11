@@ -14,6 +14,7 @@ import androidx.fragment.app.commit
 import com.example.storeclient.databinding.ActivityMainBinding
 import androidx.fragment.app.replace
 import com.elorrieta.alumnoclient.LandingFragment
+import com.example.storeclient.config.AppConfig
 import com.example.storeclient.data.LoginDataSource
 import com.example.storeclient.data.LoginRepository
 import com.example.storeclient.ui.fragments.UsersFragment
@@ -122,7 +123,10 @@ Log.d("NAVIGATE", lastFragment.toString())
 
     fun logged_limit() {
         GlobalScope.launch {
-            delay(10 * 20 * 50)
+            if(AppConfig.DEBUG_MODE)
+                delay(AppConfig.AUTO_LOGOUT_DEBUG)
+            else
+                delay(AppConfig.AUTO_LOGOUT_DELAY_MS)
 
             loginRepository.logout()
 //just to test it, will remove later... or not, who cares

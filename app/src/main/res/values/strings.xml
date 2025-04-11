@@ -12,4 +12,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello LANDING fragment</string>
     <string name="go_home">home</string>
+    <string name="producto_anadido">Producto anadido</string>
+    <string name="producto_eliminado">Producto eliminado</string>
 </resources>

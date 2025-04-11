@@ -33,7 +33,7 @@ class ProductsAdapter :
                 image.setImageBitmap(item.image.toBitmap())
             }
 
-            //PENDING OF INSTALLING PICASO LIBRARY AND LOAD db
+
 
 if(item.enabled == 0)
 {

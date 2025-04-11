@@ -98,11 +98,13 @@ class ProdutcsFragment : BaseFragment(R.layout.fragment_produtcs_list) {
                     ItemTouchHelper.LEFT -> {
 
                         viewModel.deleteProduct(product.productId!!)
-                        Toast.makeText(requireContext(), "Producto eliminado", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(),
+                            getString(R.string.producto_eliminado), Toast.LENGTH_SHORT).show()
                     }
                     ItemTouchHelper.RIGHT -> {
                         viewModel.addProduct(product.productId!!)
-                        Toast.makeText(requireContext(), "Producto anadido", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(),
+                            getString(R.string.producto_anadido), Toast.LENGTH_SHORT).show()
                     }
                 }
 

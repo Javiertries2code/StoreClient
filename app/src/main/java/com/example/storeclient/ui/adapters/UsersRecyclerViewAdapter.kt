@@ -12,6 +12,7 @@ import com.example.storeclient.AppFragments
 import com.example.storeclient.MainActivity
 import com.example.storeclient.R
 import com.example.storeclient.entities.UsersItem
+import com.example.storeclient.utils.toBitmap
 
 class UsersRecyclerViewAdapter(
     private val values: List<UsersItem>
@@ -31,6 +32,13 @@ class UsersRecyclerViewAdapter(
         val item = values[position]
         holder.idView.text = item.userId.toString()
         holder.contentView.text = item.name
+        if (item.image == null) {
+            holder.userImage.setImageResource(R.drawable.useravatar) // fallback
+        } else {
+        //hold your horses, users thing is not my duty,
+        // if so, gotta change userimage from byte[]  to string and so on
+        //  holder.userImage.setImageBitmap(item.image.toBitmap())
+        }
 
         holder.itemView.setOnClickListener {
             Log.i("UsersAdapter", "Clicked: ${item.name}")
