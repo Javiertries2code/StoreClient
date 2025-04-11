@@ -1,6 +1,7 @@
 package com.example.storeclient.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,13 +9,17 @@ import android.widget.Button
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.storeclient.AppFragments
+import com.example.storeclient.MainActivity
 import com.example.storeclient.databinding.FragmentInventoryBinding
 import com.example.storeclient.enums.FilterType
 import com.example.storeclient.ui.adapters.InventoryAdapter
 import com.example.storeclient.ui.base.BaseFragment
 import com.example.storeclient.ui.viewmodels.InventoryViewModel
 import com.example.storeclient.R
+import com.example.storeclient.config.AppConfig
 import com.example.storeclient.databinding.FragmentPublicProductsBinding
+import com.example.storeclient.utils.goToUsers
 
 class InventoryFragment : BaseFragment(R.layout.fragment_inventory) {
 
@@ -51,9 +56,23 @@ class InventoryFragment : BaseFragment(R.layout.fragment_inventory) {
         binding.showLowStockBtn.setOnClickListener { viewModel.applyFilter(FilterType.LOW_STOCK) }
         binding.showDisabledBtn.setOnClickListener { viewModel.applyFilter(FilterType.DISABLED) }
         binding.sendEmail.setOnClickListener { viewModel.sendEmailInaventory() }
+        binding.goBack.setOnClickListener { goToUsers()}
 
         viewModel.filteredProducts.observe(viewLifecycleOwner) { filteredProducts ->
             adapter.submitList(filteredProducts)
+        }
+
+        val activity = requireActivity() as MainActivity
+
+        if (AppConfig.DEV_SKIP_LOGIN == false) {
+
+            val repo = activity.loginRepository
+            repo.loggedInUser.observe(viewLifecycleOwner) { user ->
+                if (user == null) {
+                    Log.d("AuthObserver", "User is null, navigating to login")
+                    activity.navigate(AppFragments.LOGIN_FRAGMENT)
+                }
+            }
         }
     }
 

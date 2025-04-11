@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
 lateinit var loginRepository: LoginRepository
 
 lateinit var lastFragment: AppFragments
+//lateinit var previousFragment: AppFragments
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,7 +91,11 @@ lateinit var lastFragment: AppFragments
         val fragmentManager = supportFragmentManager
         val existingFragment = fragmentManager.findFragmentByTag(fragment.name)
         if(fragment != AppFragments.LANDING_FRAGMENT)
-        {  lastFragment = fragment}
+        {
+           // previousFragment = if (::lastFragment.isInitialized) lastFragment else AppFragments.USERS_FRAGMENT
+
+            lastFragment = fragment
+        }
 
         val fragmentToNavigate = existingFragment ?: fragment.newInstance().apply {
             arguments = args

@@ -15,6 +15,7 @@ import com.example.storeclient.R
 import androidx.core.view.GravityCompat
 import com.example.storeclient.AppFragments
 import com.example.storeclient.MainActivity
+import com.example.storeclient.utils.smartNavigateTo
 
 abstract class BaseFragment(@LayoutRes private val layoutRes: Int) : Fragment() {
 
@@ -51,27 +52,27 @@ abstract class BaseFragment(@LayoutRes private val layoutRes: Int) : Fragment() 
         val activity = requireActivity() as? MainActivity
 
         buttonHome?.setOnClickListener {
-            activity?.navigate(AppFragments.USERS_FRAGMENT)
+            smartNavigateTo(AppFragments.USERS_FRAGMENT)
             closeDrawer()
         }
 
         navUsers?.setOnClickListener {
-            activity?.secureNavigate(AppFragments.ADMIN_USERS_FRAGMENT)
+            smartNavigateTo(AppFragments.ADMIN_USERS_FRAGMENT)
             closeDrawer()
         }
 
         navProducts?.setOnClickListener {
-            activity?.navigate(AppFragments.PUBLIC_PRODUCTS_FRAGMENT)
+            smartNavigateTo(AppFragments.PUBLIC_PRODUCTS_FRAGMENT)
             closeDrawer()
         }
 
         navDispatch?.setOnClickListener {
-            activity?.secureNavigate(AppFragments.DISPATCH_NOTE_FRAGMENT)
+            smartNavigateTo(AppFragments.DISPATCH_NOTE_FRAGMENT)
             closeDrawer()
         }
 
         navInventory?.setOnClickListener {
-            activity?.secureNavigate(AppFragments.INVENTORY_FRAGMENT)
+            smartNavigateTo(AppFragments.INVENTORY_FRAGMENT)
             closeDrawer()
         }
 

@@ -7,6 +7,8 @@ object AppConfig {
     const val AUTO_LOGOUT_DELAY_MS = 10 * 60 * 1000L // 10 minutos
     const val AUTO_LOGOUT_DEBUG = 20 * 60 * 2000L
 
+    const val DEV_SKIP_LOGIN = true
+
 
     // Cifrado (lo usaremos más adelante)
     const val ENCRYPTION_ALGORITHM = "AES/CBC/PKCS5Padding"
