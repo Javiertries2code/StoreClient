@@ -56,6 +56,9 @@ interface RetrofitService {
 
 }
 
+/**
+ * yeap, not a factory, had to singletonized the thing instead...
+ */
 object RetrofitServiceFactory {
     private var instance: RetrofitService? = null
 

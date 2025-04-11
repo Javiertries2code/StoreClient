@@ -4,7 +4,7 @@ data class ProductsItem(
      val amount: Int,
     val cost: Double,
     val enabled: Int,
-    val image: Any? = null,
+    val image: String? = null,
     val minimumAmount: Int,
     val name: String,
     val productId: Int? = null,

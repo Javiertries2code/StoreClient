@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.storeclient.R
 import com.example.storeclient.entities.ProductsItem
+import com.example.storeclient.utils.toBitmap
 import org.json.JSONObject.NULL
 
 
@@ -26,10 +27,12 @@ class ProductsAdapter :
         fun bind(item: ProductsItem) {
             name.text = item.name
             amount.text = item.amount.toString()
-            if(item.image == NULL)
-                image.setImageResource(R.drawable.cerveza)
-//            else
-//                image.setImageResource(item.image)
+            if (item.image == null) {
+                image.setImageResource(R.drawable.defaultimage) // fallback
+            } else {
+                image.setImageBitmap(item.image.toBitmap())
+            }
+
             //PENDING OF INSTALLING PICASO LIBRARY AND LOAD db
 
 

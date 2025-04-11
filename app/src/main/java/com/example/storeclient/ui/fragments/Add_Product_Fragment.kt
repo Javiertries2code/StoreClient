@@ -18,6 +18,7 @@ import com.example.storeclient.entities.ProductsItem
 import com.example.storeclient.ui.base.BaseFragment
 import com.example.storeclient.ui.viewmodels.ProductsViewModel
 import com.example.storeclient.utils.navigateTo
+import com.example.storeclient.utils.toBase64String
 
 
 class Add_Product_Fragment : BaseFragment(R.layout.fragment_add__product_) {
@@ -88,10 +89,16 @@ class Add_Product_Fragment : BaseFragment(R.layout.fragment_add__product_) {
         val season = binding.editSeason.text.toString().toIntOrNull()
         val enabled = binding.checkboxEnabled.isChecked
 
+
         if (name.isBlank() || amount == null || minimumAmount == null || cost == null || retailPrice == null || season == null) {
-            Toast.makeText(requireContext(), "Please fill in all fields correctly", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Deben rellenarse todos los campos", Toast.LENGTH_SHORT).show()
             return
         }
+        if(capturedImage == null){
+            Toast.makeText(requireContext(), "Se precisa fotografia del articulo", Toast.LENGTH_SHORT).show()
+            return
+        }
+
 
         val product = ProductsItem(
             name = name,
@@ -100,12 +107,17 @@ class Add_Product_Fragment : BaseFragment(R.layout.fragment_add__product_) {
             cost = cost,
             retailPrice = retailPrice,
             season = if (season != 0) 1 else 0,
-            enabled = if (enabled) 1 else 0
-            // image is left null by now
+            enabled = if (enabled) 1 else 0,
+            image = capturedImage?.toBase64String()
         )
 
         Toast.makeText(requireContext(), "Product ready to send: $product", Toast.LENGTH_LONG).show()
         viewModel.createProduct(product)
+        capturedImage = null
+        /*aint sure about his, i guess i gotta nullify, in case i remain in the fragment adding products, an teh pic stays on memory,
+        so it keeps using it once and again
+         */
+
         viewModel.saveStatus.observe(viewLifecycleOwner) { success ->
             if (success) {
                 Toast.makeText(requireContext(), "Product saved successfully!", Toast.LENGTH_SHORT).show()
