@@ -35,21 +35,27 @@ class ProductsAdapter :
 
             //PENDING OF INSTALLING PICASO LIBRARY AND LOAD db
 
+if(item.enabled == 0)
+{
+    amount.setTextColor(Color.BLACK)
+    name.setTextColor(Color.BLACK)
+    minimmun_amount.text = "Producto deshabilitado"
+    minimmun_amount.setTextColor(Color.BLUE)
+}
+else {
+    if (item.amount < item.minimumAmount) {
+        minimmun_amount.text = "Bajo Stock"
+        minimmun_amount.setTextColor(Color.RED)
+        amount.setTextColor(Color.RED)
+        name.setTextColor(Color.RED)
+    } else {
+        amount.setTextColor(Color.BLACK)
+        name.setTextColor(Color.BLACK)
+        minimmun_amount.text = "Stock OK"
+        minimmun_amount.setTextColor(Color.GREEN)
 
-            if(item.amount < item.minimumAmount) {
-                minimmun_amount.text = "Bajo Stock"
-                minimmun_amount.setTextColor(Color.RED)
-                amount.setTextColor(Color.RED)
-                name.setTextColor(Color.RED)
-            }
-            else {
-                amount.setTextColor(Color.BLACK)
-               name.setTextColor(Color.BLACK)
-                minimmun_amount.text = "Stock OK"
-                minimmun_amount.setTextColor(Color.GREEN)
-
-
-            }
+    }
+}
 //            else if(item.amount > ProductLevel.HIGH.thresold) {
 //                amount.setTextColor(Color.GREEN)
 //                name.setTextColor(Color.GREEN)
