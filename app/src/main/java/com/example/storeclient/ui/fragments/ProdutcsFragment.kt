@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.storeclient.ui.base.BaseFragment
+import com.example.storeclient.ui.fragments.base.BaseFragment
 import com.example.storeclient.ui.adapters.ProductsAdapter
 import com.example.storeclient.ui.viewmodels.ProductsViewModel
 import androidx.fragment.app.viewModels
-import com.example.storeclient.AppFragments
+import com.example.storeclient.enums.AppFragments
 import com.example.storeclient.R
 import com.example.storeclient.utils.navigateTo
 

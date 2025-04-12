@@ -8,11 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.storeclient.AppFragments
-import com.example.storeclient.MainActivity
+import com.example.storeclient.enums.AppFragments
+import com.example.storeclient.ui.main.MainActivity
 import com.example.storeclient.R
 import com.example.storeclient.entities.UsersItem
-import com.example.storeclient.utils.toBitmap
 
 class UsersRecyclerViewAdapter(
     private val values: List<UsersItem>

@@ -1,4 +1,4 @@
-package com.example.storeclient
+package com.example.storeclient.ui.main
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -14,10 +14,11 @@ import androidx.fragment.app.commit
 import com.example.storeclient.databinding.ActivityMainBinding
 import androidx.fragment.app.replace
 import com.elorrieta.alumnoclient.LandingFragment
+import com.example.storeclient.enums.AppFragments
+import com.example.storeclient.R
 import com.example.storeclient.config.AppConfig
 import com.example.storeclient.data.LoginDataSource
 import com.example.storeclient.data.LoginRepository
-import com.example.storeclient.ui.fragments.UsersFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay

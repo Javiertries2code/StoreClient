@@ -4,10 +4,10 @@ import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import com.example.storeclient.AppFragments
-import com.example.storeclient.MainActivity
+import com.example.storeclient.enums.AppFragments
+import com.example.storeclient.ui.main.MainActivity
 import com.example.storeclient.R
-import com.example.storeclient.ui.base.BaseFragment
+import com.example.storeclient.ui.fragments.base.BaseFragment
 import com.example.storeclient.ui.viewmodels.AdminUsersViewModel
 
 class AdminUsersFragment :  BaseFragment(R.layout.fragment_dispatch_note) {

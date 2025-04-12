@@ -3,8 +3,6 @@ package com.example.storeclient.data
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.storeclient.AppFragments
-import com.example.storeclient.MainActivity
 import com.example.storeclient.model.LoggedInUser
 
 /**

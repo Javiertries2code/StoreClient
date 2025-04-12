@@ -7,13 +7,14 @@
     android:padding="8dp"
     android:fitsSystemWindows="true"> <!-- This should work with the toolbar drawer,
     but i will have to go cheap... harcoding to come!!-->
+
+
     <Button
         android:id="@+id/go_to_products"
-        android:layout_width="match_parent"
+        android:layout_width="181dp"
         android:layout_height="wrap_content"
-        android:text="Cancelar"
-        android:layout_marginBottom="8dp" />
-
+        android:layout_marginBottom="8dp"
+        android:text="Inicio" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/publicProductsRecyclerView"

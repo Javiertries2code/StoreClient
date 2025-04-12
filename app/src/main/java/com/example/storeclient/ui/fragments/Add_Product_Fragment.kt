@@ -11,11 +11,11 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import com.example.storeclient.AppFragments
+import com.example.storeclient.enums.AppFragments
 import com.example.storeclient.R
 import com.example.storeclient.databinding.FragmentAddProductBinding
 import com.example.storeclient.entities.ProductsItem
-import com.example.storeclient.ui.base.BaseFragment
+import com.example.storeclient.ui.fragments.base.BaseFragment
 import com.example.storeclient.ui.viewmodels.ProductsViewModel
 import com.example.storeclient.utils.navigateTo
 import com.example.storeclient.utils.toBase64String

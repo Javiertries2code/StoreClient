@@ -2,9 +2,7 @@ package com.example.storeclient.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.storeclient.MainActivity
-import com.example.storeclient.data.LoginDataSource
-import com.example.storeclient.data.LoginRepository
+import com.example.storeclient.ui.main.MainActivity
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.

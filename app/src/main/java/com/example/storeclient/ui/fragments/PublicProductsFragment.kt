@@ -10,9 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.storeclient.R
 import com.example.storeclient.databinding.FragmentPublicProductsBinding
 import com.example.storeclient.ui.adapters.PublicProductsAdapter
-import com.example.storeclient.ui.base.BaseFragment
+import com.example.storeclient.ui.fragments.base.BaseFragment
 import com.example.storeclient.ui.viewmodels.ProductsViewModel
 import com.example.storeclient.utils.goToProducts
+import com.example.storeclient.utils.goToUsers
 
 class PublicProductsFragment : BaseFragment(R.layout.fragment_public_products) {
 
@@ -39,7 +40,7 @@ class PublicProductsFragment : BaseFragment(R.layout.fragment_public_products) {
         binding.publicProductsRecyclerView.adapter = adapter
 
         view.findViewById<Button>(R.id.go_to_products).setOnClickListener {
-            goToProducts()
+            goToUsers()
         }
 
         viewModel.products.observe(viewLifecycleOwner) { productList ->

@@ -11,7 +11,7 @@ import com.example.storeclient.R
 import com.example.storeclient.data.RetrofitServiceFactory
 import com.example.storeclient.entities.Users
 import com.example.storeclient.ui.adapters.UsersRecyclerViewAdapter
-import com.example.storeclient.ui.base.BaseFragment
+import com.example.storeclient.ui.fragments.base.BaseFragment
 import kotlinx.coroutines.launch
 
 class UsersFragment : BaseFragment(R.layout.fragment_users_list){

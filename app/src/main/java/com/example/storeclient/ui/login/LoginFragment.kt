@@ -13,15 +13,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
 import android.widget.Toast
-import com.example.storeclient.AppFragments
-import com.example.storeclient.MainActivity
+import com.example.storeclient.ui.main.MainActivity
 import com.example.storeclient.databinding.FragmentLoginBinding
 
 import com.example.storeclient.R
-import com.example.storeclient.utils.goToProducts
 import com.example.storeclient.utils.goToUsers
 
 class LoginFragment : Fragment() {

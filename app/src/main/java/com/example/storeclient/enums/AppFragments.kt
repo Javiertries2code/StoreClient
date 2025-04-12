@@ -1,4 +1,4 @@
-package com.example.storeclient
+package com.example.storeclient.enums
 
 
 

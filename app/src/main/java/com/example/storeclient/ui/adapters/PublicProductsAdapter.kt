@@ -2,18 +2,16 @@ package com.example.storeclient.ui.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.storeclient.AppFragments
-import com.example.storeclient.MainActivity
+import com.example.storeclient.enums.AppFragments
+import com.example.storeclient.ui.main.MainActivity
 import com.example.storeclient.databinding.ItemPublicProductBinding
 import com.example.storeclient.entities.ProductsItem
 import com.example.storeclient.ui.viewmodels.ProductsViewModel
-import com.example.storeclient.utils.navigateTo
 
 class PublicProductsAdapter(private val viewModel: ProductsViewModel) :
     ListAdapter<ProductsItem, PublicProductsAdapter.ProductViewHolder>(DiffCallback()) {

@@ -12,12 +12,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.core.os.bundleOf
-import androidx.fragment.app.FragmentActivity
-import com.example.storeclient.AppFragments
-import com.example.storeclient.MainActivity
+import com.example.storeclient.enums.AppFragments
+import com.example.storeclient.ui.main.MainActivity
 import com.example.storeclient.R
-import com.example.storeclient.utils.navigateTo
 import com.example.storeclient.utils.smartNavigateTo
 
 

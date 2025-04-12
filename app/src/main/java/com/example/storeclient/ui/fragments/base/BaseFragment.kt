@@ -1,4 +1,4 @@
-package com.example.storeclient.ui.base
+package com.example.storeclient.ui.fragments.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,8 +13,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.example.storeclient.R
 import androidx.core.view.GravityCompat
-import com.example.storeclient.AppFragments
-import com.example.storeclient.MainActivity
+import com.example.storeclient.enums.AppFragments
+import com.example.storeclient.ui.main.MainActivity
 import com.example.storeclient.utils.smartNavigateTo
 
 abstract class BaseFragment(@LayoutRes private val layoutRes: Int) : Fragment() {

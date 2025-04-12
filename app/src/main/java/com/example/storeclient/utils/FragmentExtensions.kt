@@ -1,8 +1,8 @@
 package com.example.storeclient.utils
 
 import androidx.fragment.app.Fragment
-import com.example.storeclient.AppFragments
-import com.example.storeclient.MainActivity
+import com.example.storeclient.enums.AppFragments
+import com.example.storeclient.ui.main.MainActivity
 import com.example.storeclient.config.AppConfig
 
 fun Fragment.navigateTo(fragment: AppFragments) {

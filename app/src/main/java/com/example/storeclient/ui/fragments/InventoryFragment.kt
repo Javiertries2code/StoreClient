@@ -5,20 +5,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.storeclient.AppFragments
-import com.example.storeclient.MainActivity
+import com.example.storeclient.enums.AppFragments
+import com.example.storeclient.ui.main.MainActivity
 import com.example.storeclient.databinding.FragmentInventoryBinding
 import com.example.storeclient.enums.FilterType
 import com.example.storeclient.ui.adapters.InventoryAdapter
-import com.example.storeclient.ui.base.BaseFragment
+import com.example.storeclient.ui.fragments.base.BaseFragment
 import com.example.storeclient.ui.viewmodels.InventoryViewModel
 import com.example.storeclient.R
 import com.example.storeclient.config.AppConfig
-import com.example.storeclient.databinding.FragmentPublicProductsBinding
 import com.example.storeclient.utils.goToUsers
 
 class InventoryFragment : BaseFragment(R.layout.fragment_inventory) {
