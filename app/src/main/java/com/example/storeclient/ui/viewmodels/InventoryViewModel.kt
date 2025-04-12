@@ -1,13 +1,17 @@
 package com.example.storeclient.ui.viewmodels
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.storeclient.config.AppConfig
 import com.example.storeclient.data.RetrofitServiceFactory
 import com.example.storeclient.entities.ProductsItem
 import com.example.storeclient.enums.FilterType
+import com.example.storeclient.helpers.EmailHelper
+import com.example.storeclient.utils.ExcelExporter
 import kotlinx.coroutines.launch
 
 class InventoryViewModel : ViewModel() {
@@ -54,7 +58,35 @@ class InventoryViewModel : ViewModel() {
         }
     }
 
-    fun sendEmailInaventory() {
-        return
+    private fun buildInventoryReport(products: List<ProductsItem>): String {
+        val report = StringBuilder()
+        report.append("Producto".padEnd(30))
+        report.append("Cantidad".padEnd(12))
+        report.append("Stock Mínimo\n")
+
+        for (item in products) {
+            report.append(item.name.padEnd(30))
+            report.append(item.amount.toString().padEnd(12))
+            report.append(item.minimumAmount.toString() + "\n")
+        }
+
+        return report.toString()
     }
+
+    fun sendInventoryEmail(context: Context) {
+        val products = _filteredProducts.value ?: emptyList()
+        val file = ExcelExporter.exportInventoryToExcel(context, products)
+        val bodyText = buildInventoryReport(products)
+
+        if (file != null) {
+            viewModelScope.launch {
+                EmailHelper.sendInventoryEmail(context, file, bodyText)
+            }
+        } else {
+            Log.e("InventoryViewModel", "No se pudo crear el archivo Excel para enviar.")
+        }
+    }
+
+
+
 }

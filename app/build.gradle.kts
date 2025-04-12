@@ -7,6 +7,8 @@ android {
     namespace = "com.example.storeclient"
     compileSdk = 34
 
+
+
     defaultConfig {
         applicationId = "com.example.storeclient"
         minSdk = 26
@@ -15,7 +17,20 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+
     }
+
+    packaging {
+        resources {
+            excludes += setOf(
+                "META-INF/LICENSE.md",
+                "META-INF/LICENSE-notice.md",
+                "META-INF/NOTICE.md"
+            )
+        }
+    }
+
 
     buildTypes {
         release {
@@ -48,6 +63,15 @@ dependencies {
 
 // fragments
     implementation(libs.androidx.fragment.ktx) // o la versión más reciente
+
+    //Excell dependencias
+    implementation(libs.poi) // Para Excel (.xls)
+    implementation(libs.poi.ooxml) // Para Excel (.xlsx)
+
+    //EMail dependencies with smtp
+    implementation(libs.android.mail)
+    implementation(libs.android.activation)
+
 
     //
     implementation(libs.androidx.core.ktx)

@@ -55,7 +55,8 @@ class InventoryFragment : BaseFragment(R.layout.fragment_inventory) {
         binding.showAllBtn.setOnClickListener { viewModel.applyFilter(FilterType.ALL) }
         binding.showLowStockBtn.setOnClickListener { viewModel.applyFilter(FilterType.LOW_STOCK) }
         binding.showDisabledBtn.setOnClickListener { viewModel.applyFilter(FilterType.DISABLED) }
-        binding.sendEmail.setOnClickListener { viewModel.sendEmailInaventory() }
+        binding.sendEmail.setOnClickListener {     viewModel.sendInventoryEmail(requireContext())
+        }
         binding.goBack.setOnClickListener { goToUsers()}
 
         viewModel.filteredProducts.observe(viewLifecycleOwner) { filteredProducts ->

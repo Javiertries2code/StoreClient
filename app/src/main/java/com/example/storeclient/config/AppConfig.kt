@@ -10,6 +10,15 @@ object AppConfig {
     const val DEV_SKIP_LOGIN = true
 
 
+
+
+    //Email SMTP
+    const val SMTP_HOST =  "smtp.gmail.com"
+    const val SMTP_PORT = "587"
+    const val EMAIL_USER = "javier.bravogu@elorrieta-errekamari.com"
+    const val EMAIL_PASSWORD = "2025@Elorrieta"
+    const val RECEIVER_EMAIL = "javier.bravogu@elorrieta-errekamari.com"
+
     // Cifrado (lo usaremos más adelante)
     const val ENCRYPTION_ALGORITHM = "AES/CBC/PKCS5Padding"
     const val ENCRYPTION_KEY_LENGTH = 256 // bits
