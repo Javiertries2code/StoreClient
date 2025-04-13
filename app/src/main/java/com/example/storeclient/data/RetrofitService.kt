@@ -5,6 +5,7 @@ import com.example.storeclient.entities.Products
 import com.example.storeclient.entities.ProductsItem
 import com.example.storeclient.entities.Users
 import com.example.storeclient.entities.UsersItem
+import com.example.storeclient.model.CryptoKeys
 import com.example.storeclient.model.LoggedInUser
 import com.example.storeclient.model.LoginRequest
 
@@ -23,6 +24,8 @@ interface RetrofitService {
     @POST("auth/login")
     suspend fun login(@Body request: LoginRequest): LoggedInUser
 
+    @POST("auth/get_Keys")
+    suspend fun createProduct(@Body product: LoginRequest): CryptoKeys
 
     @GET("products/{id}")
     suspend fun getOneProduct(@Path("id") id: String): ProductsItem

@@ -12,13 +12,17 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import com.example.storeclient.enums.AppFragments
 import com.example.storeclient.ui.main.MainActivity
 import com.example.storeclient.R
+import com.example.storeclient.ui.viewmodels.ProductsViewModel
 import com.example.storeclient.utils.smartNavigateTo
 
 
 class LandingFragment : Fragment() {
+
+   // private val viewModel: LandingViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

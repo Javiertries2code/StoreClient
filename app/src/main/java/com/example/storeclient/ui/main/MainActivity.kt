@@ -19,6 +19,7 @@ import com.example.storeclient.R
 import com.example.storeclient.config.AppConfig
 import com.example.storeclient.data.LoginDataSource
 import com.example.storeclient.data.LoginRepository
+import com.example.storeclient.data.auth.TokenManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -57,14 +58,11 @@ lateinit var lastFragment: AppFragments
 
             }
         }
-        //TestRetroFit
-//
-//        val service = RetrofitServiceFactory.makeRetrofitService()
-//
-//        lifecycleScope.launch { val products = service.getOneProduct("2")
-//            Log.i("resultreceived", products.toString())
-//
-//        }
+
+
+//initializing token manager
+        TokenManager.init(applicationContext)
+
 
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)

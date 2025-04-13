@@ -20,6 +20,7 @@ class LoginDataSource {
 
 
             return Result.Success(loggedUser)
+
         } catch (e: Throwable) {
             return Result.Error(IOException("Error logging in", e))
         }

@@ -3,6 +3,7 @@ package com.example.storeclient.data
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.storeclient.data.auth.TokenManager
 import com.example.storeclient.model.LoggedInUser
 
 /**
@@ -35,6 +36,12 @@ class LoginRepository(val dataSource: LoginDataSource) {
     private fun setLoggedInUser(user: LoggedInUser) {
         this.user = user
         _loggedInUser.postValue(user)
+
+        // Save tokens to SharedPreferences, mejor hacerlo seguro por si casca
+       // TokenManager.saveTokens(user.access_token!!, user.refresh_token!!)
+        if (user.access_token != null && user.refresh_token != null) {
+            TokenManager.saveTokens(user.access_token, user.refresh_token)
+        }
         // If user credentials will be cached in local storage, it is recommended it be encrypted
         // @see https://developer.android.com/training/articles/keystore
     }
@@ -43,6 +50,9 @@ class LoginRepository(val dataSource: LoginDataSource) {
         user = null
         _loggedInUser.postValue(null)
         isLocked = true
+        // Clear tokens when logging out
+        TokenManager.clearTokens()
+
         dataSource.logout()
     }
 
