@@ -18,6 +18,7 @@ enum class AppFragments(
     val fragmentClass: Class<out Fragment>,
     val isProtected: Boolean = true // default to protected
 ) {
+    DEV_FRAGMENT(PublicProductsFragment::class.java, true),
     LOGIN_FRAGMENT(LoginFragment::class.java, false),
     LANDING_FRAGMENT(LandingFragment::class.java, false),
     USERS_FRAGMENT(UsersFragment::class.java, false),

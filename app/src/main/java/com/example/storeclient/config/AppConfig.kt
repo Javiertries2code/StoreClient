@@ -9,6 +9,7 @@ object AppConfig {
 
     const val DEV_SKIP_LOGIN = true
 
+    const val DEV_ENCRYTING_PASSWROD = "wGiHplamyXlVB11UXWol8g=="
 
 
 

@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.storeclient.data.RetrofitServiceFactory
+import com.example.storeclient.data.ApiService
 import com.example.storeclient.entities.ProductsItem
 import kotlinx.coroutines.launch
 
@@ -18,7 +18,7 @@ class ProductsViewModel : ViewModel() {
     private val _saveStatus = MutableLiveData<Boolean>()
     val saveStatus: LiveData<Boolean> = _saveStatus
 
-    private val service = RetrofitServiceFactory.makeRetrofitService()
+    private val service = ApiService.makeRetrofitService()
 
     fun loadProducts() {
         viewModelScope.launch {

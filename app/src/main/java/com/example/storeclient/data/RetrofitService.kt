@@ -1,6 +1,5 @@
 package com.example.storeclient.data
 
-import androidx.compose.ui.graphics.vector.Path
 import com.example.storeclient.entities.Products
 import com.example.storeclient.entities.ProductsItem
 import com.example.storeclient.entities.Users
@@ -8,13 +7,17 @@ import com.example.storeclient.entities.UsersItem
 import com.example.storeclient.model.CryptoKeys
 import com.example.storeclient.model.LoggedInUser
 import com.example.storeclient.model.LoginRequest
+import okhttp3.OkHttpClient
+import com.example.storeclient.BuildConfig
+import com.example.storeclient.data.interceptors.EncryptionInterceptor
+import com.example.storeclient.data.interceptors.HeaderInterceptor
+
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
-import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -62,18 +65,29 @@ interface RetrofitService {
 /**
  * yeap, not a factory, had to singletonized the thing instead...
  */
-object RetrofitServiceFactory {
+object ApiService {
     private var instance: RetrofitService? = null
 
     fun makeRetrofitService(): RetrofitService {
         if (instance == null) {
             instance = Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8099/api/")
+                .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(getClient())
                 .build()
                 .create(RetrofitService::class.java)
         }
         return instance!!
+    }
+
+    private fun getClient(): OkHttpClient {
+
+val client = OkHttpClient.Builder()
+    .addInterceptor(HeaderInterceptor())
+    .addInterceptor(EncryptionInterceptor())
+        .build()
+
+   return  client
     }
 }
 

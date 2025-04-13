@@ -33,14 +33,20 @@ android {
 
 
     buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8099/api/\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8099/api/\"")
         }
+
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -49,7 +55,9 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
+
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -72,6 +80,10 @@ dependencies {
     implementation(libs.android.mail)
     implementation(libs.android.activation)
 
+    //Google Tink dependencies for cripto
+    implementation(libs.tink.android)
+//needed for tinker
+
 
     //
     implementation(libs.androidx.core.ktx)
@@ -88,6 +100,8 @@ dependencies {
     implementation(libs.androidx.drawerlayout)
     implementation(libs.appcompat)
     implementation(libs.google.material)
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

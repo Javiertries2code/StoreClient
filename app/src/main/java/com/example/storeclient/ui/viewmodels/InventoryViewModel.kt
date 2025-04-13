@@ -6,8 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.storeclient.config.AppConfig
-import com.example.storeclient.data.RetrofitServiceFactory
+import com.example.storeclient.data.ApiService
 import com.example.storeclient.entities.ProductsItem
 import com.example.storeclient.enums.FilterType
 import com.example.storeclient.helpers.EmailHelper
@@ -16,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class InventoryViewModel : ViewModel() {
 
-    private val service = RetrofitServiceFactory.makeRetrofitService()
+    private val service = ApiService.makeRetrofitService()
 
     private val fullProductList = mutableListOf<ProductsItem>()
 

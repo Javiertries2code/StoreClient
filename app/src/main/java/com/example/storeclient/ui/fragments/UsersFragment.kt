@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.example.storeclient.R
-import com.example.storeclient.data.RetrofitServiceFactory
+import com.example.storeclient.data.ApiService
 import com.example.storeclient.entities.Users
 import com.example.storeclient.ui.adapters.UsersRecyclerViewAdapter
 import com.example.storeclient.ui.fragments.base.BaseFragment
@@ -30,7 +30,7 @@ class UsersFragment : BaseFragment(R.layout.fragment_users_list){
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.list)
-        val service = RetrofitServiceFactory.makeRetrofitService()
+        val service = ApiService.makeRetrofitService()
 
         lifecycleScope.launch {
             try {
