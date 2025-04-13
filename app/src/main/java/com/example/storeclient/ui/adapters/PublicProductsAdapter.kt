@@ -42,6 +42,7 @@ class PublicProductsAdapter(private val viewModel: ProductsViewModel) :
                 Log.d("PRODUCTO", "Edit button clicked")
                 try {
                     val name = binding.productName.text.toString()
+                    val amount = binding.productAmount.text.toString().toIntOrNull()
                     val minAmount = binding.productMinimum.text.toString().toIntOrNull()
                     val isEnabled = binding.productEnabled.isChecked
 
@@ -49,6 +50,7 @@ class PublicProductsAdapter(private val viewModel: ProductsViewModel) :
 
                     val updatedProduct = product.copy(
                         name = name,
+                        amount = amount ?: product.amount,
                         minimumAmount = minAmount ?: product.minimumAmount,
                         enabled = if (isEnabled) 1 else 0
                     )

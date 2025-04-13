@@ -63,9 +63,11 @@ object TokenManager {
     }
 
     fun getCryptoKey(): String? {
-        if (BuildConfig.DEBUG)
+
+        if (BuildConfig.DEBUG) {
+            Log.d("access_token", prefs.getString("access_token", "no hay na en tokens")!!)
             return AppConfig.DEV_ENCRYTING_PASSWROD
-        else
+        } else
             return prefs.getString(CRYPTO_KEY, null)
     }
 

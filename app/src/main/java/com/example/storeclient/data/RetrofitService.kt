@@ -81,11 +81,15 @@ object ApiService {
     }
 
     private fun getClient(): OkHttpClient {
-
+/*
 val client = OkHttpClient.Builder()
     .addInterceptor(HeaderInterceptor())
+    .build()
+        */
+        val client = OkHttpClient.Builder()
+    .addInterceptor(HeaderInterceptor())
     .addInterceptor(EncryptionInterceptor())
-        .build()
+    .build()
 
    return  client
     }
