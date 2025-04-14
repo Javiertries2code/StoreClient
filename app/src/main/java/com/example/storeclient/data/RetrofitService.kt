@@ -12,6 +12,7 @@ import com.example.storeclient.BuildConfig
 import com.example.storeclient.data.interceptors.EncryptionInterceptor
 import com.example.storeclient.data.interceptors.HeaderInterceptor
 import com.example.storeclient.crypto.DecryptingConverterFactory
+import com.example.storeclient.crypto.EncryptingConverterFactory
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -68,10 +69,12 @@ object ApiService {
         if (instance == null) {
             val gsonFactory = GsonConverterFactory.create()
             val decryptingFactory = DecryptingConverterFactory(gsonFactory)
+            val encryptingFactory = EncryptingConverterFactory(gsonFactory)
 
             instance = Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(decryptingFactory)
+                .addConverterFactory(encryptingFactory)
                 .client(getClient())
                 .build()
                 .create(RetrofitService::class.java)
@@ -82,7 +85,6 @@ object ApiService {
     private fun getClient(): OkHttpClient {
         val client = OkHttpClient.Builder()
             .addInterceptor(HeaderInterceptor())
-            .addInterceptor(EncryptionInterceptor())
             .build()
         return client
     }
