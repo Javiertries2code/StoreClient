@@ -59,14 +59,14 @@ class InventoryViewModel : ViewModel() {
 
     private fun buildInventoryReport(products: List<ProductsItem>): String {
         val report = StringBuilder()
-        report.append("Producto".padEnd(30))
-        report.append("Cantidad".padEnd(12))
-        report.append("Stock Mínimo\n")
+        report.append("Producto".padEnd(30)+"\t")
+        report.append("Cantidad".padEnd(30)+"\t")
+        report.append("Stock Mínimo".padEnd(30) + "\n")
 
         for (item in products) {
-            report.append(item.name.padEnd(30))
-            report.append(item.amount.toString().padEnd(12))
-            report.append(item.minimumAmount.toString() + "\n")
+            report.append(item.name.padEnd(30)+"\t")
+            report.append(item.amount.toString().padEnd(30)+"\t")
+            report.append(item.minimumAmount.toString().padEnd(30) + "\n")
         }
 
         return report.toString()

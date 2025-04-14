@@ -19,7 +19,7 @@ object CryptoHelper {
         Log.d("key_retrieved", base64Key)
 
         val rawKey = Base64.decode(base64Key, Base64.NO_WRAP)
-        AesGcmJce(rawKey) // ← aquí usamos directamente la clase simple
+        AesGcmJce(rawKey)
     }
 
     fun encrypt(plainText: String): String {
