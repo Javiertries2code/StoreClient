@@ -34,17 +34,25 @@ class UsersFragment : BaseFragment(R.layout.fragment_users_list){
 
         lifecycleScope.launch {
             try {
-                val list_users = service.getAllUsers()
+                val list_users = service.testListUsers()
 
-                recyclerView.layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
+                if (!list_users.isNullOrEmpty()) {
+
+
+                    recyclerView.layoutManager = when {
+                        columnCount <= 1 -> LinearLayoutManager(context)
+                        else -> GridLayoutManager(context, columnCount)
+                    }
+                    recyclerView.adapter = UsersRecyclerViewAdapter(list_users)
+                } else {
+                    Log.e("retrofit_error", "❌ API responded with error: ")
                 }
-                recyclerView.adapter = UsersRecyclerViewAdapter(list_users)
+
             } catch (e: Exception) {
-                Log.e("retrofit_error", "Error al obtener productos", e)
+                Log.e("retrofit_error", "❌ Network or parsing error", e)
             }
         }
+
     }
 
     companion object {

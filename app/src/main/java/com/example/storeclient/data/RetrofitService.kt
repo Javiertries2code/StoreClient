@@ -13,6 +13,9 @@ import com.example.storeclient.data.interceptors.EncryptionInterceptor
 import com.example.storeclient.data.interceptors.HeaderInterceptor
 import com.example.storeclient.crypto.DecryptingConverterFactory
 import com.example.storeclient.crypto.EncryptingConverterFactory
+import com.example.storeclient.model.ApiResponse
+import org.apache.poi.ss.formula.functions.T
+import retrofit2.Response
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -25,6 +28,14 @@ import retrofit2.http.Path
 
 interface RetrofitService {
 
+    @GET("test/users")
+    suspend fun testListUsers(): List<UsersItem>
+
+
+    ////TEST AREA
+
+
+    ///TEST
     @POST("auth/login")
     suspend fun login(@Body request: LoginRequest): LoggedInUser
 
@@ -41,7 +52,7 @@ interface RetrofitService {
     suspend fun getOneUser(@Path("id") id: String): UsersItem
 
     @GET("users")
-    suspend fun getAllUsers(): Users
+    suspend fun getAllUsers(): Response<ApiResponse<List<UsersItem>>>
 
     @DELETE("products/{id}")
     suspend fun eraseProduct(@Path("id") productId: String)

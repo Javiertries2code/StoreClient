@@ -1,16 +1,24 @@
 package com.example.storeclient.crypto
 
 import android.util.Log
+import com.example.storeclient.entities.ProductsItem
+import com.example.storeclient.entities.UsersItem
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
+import org.json.JSONObject
 import retrofit2.Converter
 import retrofit2.Retrofit
-import okhttp3.ResponseBody
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.ResponseBody.Companion.toResponseBody
 import java.lang.reflect.Type
 
 class DecryptingConverterFactory(
     private val baseFactory: Converter.Factory
 ) : Converter.Factory() {
+
+    private val gson = Gson()
+
     override fun responseBodyConverter(
         type: Type,
         annotations: Array<Annotation>,
@@ -24,7 +32,6 @@ class DecryptingConverterFactory(
             Log.d("Decrypting", "🔐 Encrypted text received:\n$encryptedText")
 
             val decryptedJson = try {
-                // Si empieza como JSON válido, no desencriptamos
                 if (encryptedText.startsWith("{") || encryptedText.startsWith("[")) {
                     Log.d("Decrypting", "🟢 Plain JSON detected, skipping decryption")
                     encryptedText
@@ -39,8 +46,25 @@ class DecryptingConverterFactory(
 
             Log.d("Decrypting", "✅ Decrypted JSON:\n$decryptedJson")
 
-            val cleanBody = decryptedJson.toResponseBody("application/json".toMediaType())
-            gsonConverter!!.convert(cleanBody)
+            // Extraer solo el campo 'data' desde el ApiResponse<T>
+            val jsonObject = JSONObject(decryptedJson)
+            val typeName = jsonObject.optString("type")
+            val dataJson = jsonObject.opt("data").toString()
+
+            Log.d("Response","in class DecryptingConverterFactory(\n $dataJson)")
+
+            val result: Any = when (typeName) {
+                "listuser" -> gson.fromJson(dataJson, object : TypeToken<List<UsersItem>>() {}.type)
+                "user" -> gson.fromJson(dataJson, UsersItem::class.java)
+                "listproduct" -> gson.fromJson(dataJson, object : TypeToken<List<ProductsItem>>() {}.type)
+                "product" -> gson.fromJson(dataJson, ProductsItem::class.java)
+                else -> {
+                    Log.e("Decrypting", "❌ Unknown type: $typeName")
+                    throw IllegalArgumentException("Unknown type: $typeName")
+                }
+            }
+
+            result
         }
     }
 }
