@@ -27,12 +27,13 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface RetrofitService {
-
+    ////TEST AREA
     @GET("test/users")
     suspend fun testListUsers(): List<UsersItem>
 
+    @GET("test/products")
+    suspend fun getAllProducts(): List<ProductsItem>
 
-    ////TEST AREA
 
 
     ///TEST
@@ -45,8 +46,8 @@ interface RetrofitService {
     @GET("products/{id}")
     suspend fun getOneProduct(@Path("id") id: String): ProductsItem
 
-    @GET("products")
-    suspend fun getAllProducts(): Products
+//    @GET("products")
+//    suspend fun getAllProducts(): Products
 
     @GET("users/{id}")
     suspend fun getOneUser(@Path("id") id: String): UsersItem
