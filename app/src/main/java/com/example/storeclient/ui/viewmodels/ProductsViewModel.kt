@@ -26,7 +26,7 @@ class ProductsViewModel : ViewModel() {
                 val list = service.getAllProducts()
                 _products.value = list
             } catch (e: Exception) {
-                Log.e("ProductsViewModel", "Error al cargar productos", e)
+                Log.e("Debug", "ProductsViewModel - Error al cargar productos", e)
             }
         }
     }

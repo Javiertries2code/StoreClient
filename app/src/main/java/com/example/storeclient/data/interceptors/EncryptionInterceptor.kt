@@ -1,6 +1,6 @@
 package com.example.storeclient.data.interceptors
 
-import com.example.storeclient.helpers.CryptoHelper
+import com.example.storeclient.crypto.CryptoHelper
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody

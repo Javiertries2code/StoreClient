@@ -1,8 +1,7 @@
-package com.example.storeclient.helpers
+package com.example.storeclient.crypto
 
 import android.util.Base64
 import android.util.Log
-import com.example.storeclient.config.AppConfig
 import com.example.storeclient.data.auth.TokenManager
 import com.google.crypto.tink.subtle.AesGcmJce
 
@@ -16,7 +15,7 @@ object CryptoHelper {
 //val base64Key = AppConfig.DEV_ENCRYTING_PASSWROD
 
     private val aead by lazy {
-        Log.d("key_retrieved", base64Key)
+        Log.d("Decrypting", base64Key)
 
         val rawKey = Base64.decode(base64Key, Base64.NO_WRAP)
         AesGcmJce(rawKey)

@@ -20,6 +20,7 @@ import com.example.storeclient.config.AppConfig
 import com.example.storeclient.data.LoginDataSource
 import com.example.storeclient.data.LoginRepository
 import com.example.storeclient.data.auth.TokenManager
+import com.example.storeclient.ui.fragments.ProdutcsFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -60,9 +61,7 @@ lateinit var lastFragment: AppFragments
         }
 
 
-//initializing token manager
         TokenManager.init(applicationContext)
-
 
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
@@ -91,8 +90,6 @@ lateinit var lastFragment: AppFragments
         val existingFragment = fragmentManager.findFragmentByTag(fragment.name)
         if(fragment != AppFragments.LANDING_FRAGMENT)
         {
-           // previousFragment = if (::lastFragment.isInitialized) lastFragment else AppFragments.USERS_FRAGMENT
-
             lastFragment = fragment
         }
 

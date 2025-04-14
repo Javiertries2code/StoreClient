@@ -11,7 +11,7 @@ import okhttp3.OkHttpClient
 import com.example.storeclient.BuildConfig
 import com.example.storeclient.data.interceptors.EncryptionInterceptor
 import com.example.storeclient.data.interceptors.HeaderInterceptor
-
+import com.example.storeclient.crypto.DecryptingConverterFactory
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -36,7 +36,6 @@ interface RetrofitService {
     @GET("products")
     suspend fun getAllProducts(): Products
 
-
     @GET("users/{id}")
     suspend fun getOneUser(@Path("id") id: String): UsersItem
 
@@ -45,7 +44,6 @@ interface RetrofitService {
 
     @DELETE("products/{id}")
     suspend fun eraseProduct(@Path("id") productId: String)
-
 
     @POST("products/minus/{id}")
     suspend fun deleteProduct(@Path("id") productId: String)
@@ -56,10 +54,8 @@ interface RetrofitService {
     @PUT("products/{id}")
     suspend fun updateProduct(@Path("id") productId: String, @Body product: ProductsItem)
 
-   @POST("products")
+    @POST("products")
     suspend fun createProduct(@Body product: ProductsItem)
-
-
 }
 
 /**
@@ -70,28 +66,24 @@ object ApiService {
 
     fun makeRetrofitService(): RetrofitService {
         if (instance == null) {
+            val gsonFactory = GsonConverterFactory.create()
+            val decryptingFactory = DecryptingConverterFactory(gsonFactory)
+
             instance = Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(decryptingFactory)
                 .client(getClient())
                 .build()
                 .create(RetrofitService::class.java)
         }
         return instance!!
     }
-
+    
     private fun getClient(): OkHttpClient {
-/*
-val client = OkHttpClient.Builder()
-    .addInterceptor(HeaderInterceptor())
-    .build()
-        */
         val client = OkHttpClient.Builder()
-    .addInterceptor(HeaderInterceptor())
-    .addInterceptor(EncryptionInterceptor())
-    .build()
-
-   return  client
+            .addInterceptor(HeaderInterceptor())
+            .addInterceptor(EncryptionInterceptor())
+            .build()
+        return client
     }
 }
-

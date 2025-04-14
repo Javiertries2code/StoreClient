@@ -39,7 +39,7 @@ class InventoryViewModel : ViewModel() {
                 fullProductList.addAll(products)
                 _filteredProducts.value = fullProductList
             } catch (e: Exception) {
-                Log.e("InventoryViewModel", "Error al cargar productos", e)
+                Log.e("Debug", "InventoryViewModel -Error al cargar productos", e)
             }
         }
     }
