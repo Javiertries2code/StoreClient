@@ -25,11 +25,11 @@ class ErrorInterceptor(private val context: Context) : Interceptor {
             if (json.has("success") && !json.getBoolean("success")) {
                 val errorMessage = json.optString("message", "Unknown error")
                 val errorCode = json.optString("status", "Unknown status")
-                Log.d("errorCode","$errorCode" )
+
 
                 // Mostrar Toast en el hilo principal
                 Handler(Looper.getMainLooper()).post {
-                    Log.d("errorCode","error interceptor --$errorCode" )
+                    Log.d("errorCode","error interceptor --$errorCode -- message $errorMessage" )
                     Toast.makeText(
                         context,
                         "[$errorCode] $errorMessage",

@@ -11,6 +11,7 @@ import com.example.storeclient.ui.fragments.DispatchNoteFragment
 import com.example.storeclient.ui.fragments.InventoryFragment
 import com.example.storeclient.ui.fragments.ProdutcsFragment
 import com.example.storeclient.ui.fragments.PublicProductsFragment
+import com.example.storeclient.ui.fragments.TestFragment
 import com.example.storeclient.ui.fragments.UsersFragment
 import com.example.storeclient.ui.login.LoginFragment
 
@@ -18,6 +19,7 @@ enum class AppFragments(
     val fragmentClass: Class<out Fragment>,
     val isProtected: Boolean = true // default to protected
 ) {
+    TEST_FRAGMENT(TestFragment::class.java, false),
     DEV_FRAGMENT(ProdutcsFragment::class.java, true),
     LOGIN_FRAGMENT(LoginFragment::class.java, false),
     LANDING_FRAGMENT(LandingFragment::class.java, false),

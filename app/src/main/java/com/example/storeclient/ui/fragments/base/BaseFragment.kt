@@ -1,5 +1,6 @@
 package com.example.storeclient.ui.fragments.base
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,7 @@ abstract class BaseFragment(@LayoutRes private val layoutRes: Int) : Fragment() 
 
     private lateinit var drawerLayout: DrawerLayout
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,6 +46,7 @@ abstract class BaseFragment(@LayoutRes private val layoutRes: Int) : Fragment() 
 
         // Drawer buttons, pending to do the liging thing
         val navUsers = baseView.findViewById<Button>(R.id.nav_users)
+        val navTest = baseView.findViewById<Button>(R.id.nav_test)
         val navProducts = baseView.findViewById<Button>(R.id.nav_products)
         val navDispatch = baseView.findViewById<Button>(R.id.nav_dispatch)
         val navInventory = baseView.findViewById<Button>(R.id.nav_inventory)
@@ -75,6 +78,8 @@ abstract class BaseFragment(@LayoutRes private val layoutRes: Int) : Fragment() 
             smartNavigateTo(AppFragments.INVENTORY_FRAGMENT)
             closeDrawer()
         }
+        navTest?.setOnClickListener{ smartNavigateTo(AppFragments.TEST_FRAGMENT)
+            closeDrawer()}
 
         return baseView
     }

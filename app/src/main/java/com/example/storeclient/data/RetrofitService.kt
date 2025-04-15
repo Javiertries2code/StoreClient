@@ -26,6 +26,9 @@ interface RetrofitService {
     ////TEST AREA
     @GET("test/users")
     suspend fun testListUsers(): List<UsersItem>
+
+    @POST("test/error/{id}")
+    suspend fun getErrorById(@Path("id") id: String): Any
     ///TEST
 
 
@@ -67,6 +70,9 @@ interface RetrofitService {
 
     @POST("products")
     suspend fun createProduct(@Body product: ProductsItem)
+
+
+
 }
 
 /**
@@ -85,7 +91,7 @@ object ApiService {
                 .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(decryptingFactory)
                 .addConverterFactory(encryptingFactory)
-                .addCallAdapterFactory(SafeCallAdapterFactory(context)) // ✅ context ya válido
+                .addCallAdapterFactory(SafeCallAdapterFactory(context))
                 .client(getClient(context)) // 👈 también lo puedes pasar aquí si tu cliente lo necesita
                 .build()
                 .create(RetrofitService::class.java)
