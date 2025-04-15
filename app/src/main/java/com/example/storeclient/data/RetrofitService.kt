@@ -32,7 +32,7 @@ interface RetrofitService {
     ///TEST
 
 
-    @POST("auth/login")
+    @POST("auth")
     suspend fun login(@Body request: LoginRequest): LoggedInUser
 
     @POST("auth/get_Keys")

@@ -3,6 +3,7 @@ package com.example.storeclient.crypto
 import android.util.Log
 import com.example.storeclient.entities.ProductsItem
 import com.example.storeclient.entities.UsersItem
+import com.example.storeclient.model.LoggedInUser
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.MediaType.Companion.toMediaType
@@ -58,6 +59,8 @@ class DecryptingConverterFactory(
                 "user" -> gson.fromJson(dataJson, UsersItem::class.java)
                 "listproduct" -> gson.fromJson(dataJson, object : TypeToken<List<ProductsItem>>() {}.type)
                 "product" -> gson.fromJson(dataJson, ProductsItem::class.java)
+                "token" -> gson.fromJson(dataJson, LoggedInUser::class.java)
+
                 else -> {
                     Log.e("Decrypting", "❌ Unknown type: $typeName")
                     throw IllegalArgumentException("Unknown type: $typeName")

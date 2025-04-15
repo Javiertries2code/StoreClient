@@ -44,6 +44,8 @@ lateinit var lastFragment: AppFragments
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//initializing  loginrepository
+        ensureLoginRepository()
 
 //initializing bindin
         binding = ActivityMainBinding.inflate(layoutInflater)
