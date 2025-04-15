@@ -94,9 +94,10 @@ class LandingFragment : Fragment() {
         buttonConnect.setOnClickListener {
             val activity = requireActivity() as? MainActivity
             if (activity != null) {
+                activity.firstEntrance = 1
 
 
-                activity.navigate(AppFragments.USERS_FRAGMENT)
+               smartNavigateTo(AppFragments.USERS_FRAGMENT)
             }
 
 

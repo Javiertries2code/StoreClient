@@ -2,6 +2,7 @@ package com.example.storeclient.ui.fragments.base
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,14 +15,19 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.example.storeclient.R
 import androidx.core.view.GravityCompat
+import com.example.storeclient.config.AppConfig
 import com.example.storeclient.enums.AppFragments
 import com.example.storeclient.ui.main.MainActivity
 import com.example.storeclient.utils.smartNavigateTo
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.time.delay
+import kotlinx.coroutines.delay
 
 abstract class BaseFragment(@LayoutRes private val layoutRes: Int) : Fragment() {
 
     private lateinit var drawerLayout: DrawerLayout
-
+private   var activity : MainActivity? = null
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,13 +36,17 @@ abstract class BaseFragment(@LayoutRes private val layoutRes: Int) : Fragment() 
     ): View? {
         val baseView = inflater.inflate(R.layout.fragment_base, container, false)
 
+      activity  = requireActivity() as? MainActivity?
+        //click reset delay counter
+
+
         // Inflar el contenido del fragmento hijo dentro del frame
         val contentContainer = baseView.findViewById<ViewGroup>(R.id.base_content_frame)
         inflater.inflate(layoutRes, contentContainer, true)
 
         // Configurar el toolbar
         val toolbar = baseView.findViewById<Toolbar>(R.id.base_toolbar)
-        (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
+        activity?.setSupportActionBar(toolbar)
         toolbar.setNavigationIcon(android.R.drawable.ic_menu_more)
         toolbar.setNavigationOnClickListener {
             openDrawer()

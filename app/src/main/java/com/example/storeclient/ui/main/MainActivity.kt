@@ -26,21 +26,20 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import android.view.MotionEvent
 
 
 class MainActivity : AppCompatActivity() {
     //binding
     private lateinit var binding: ActivityMainBinding
-
     //fragmento to navogate afterloggin
     public lateinit var targetFragment: AppFragments
-
 // as to laod in on successfull login, else, idfk how to pass it from the drawer's clicks
 lateinit var loginRepository: LoginRepository
-
 lateinit var lastFragment: AppFragments
 //lateinit var previousFragment: AppFragments
-
+ var delayNoAction =  System.currentTimeMillis()
+    var firstEntrance =0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,23 +49,31 @@ lateinit var lastFragment: AppFragments
 //initializing bindin
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         //seeting up fragment
         if (savedInstanceState == null) {
-
 ////HERE I fit it the  initial fragment, testing login now, it whould be landing
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
                 replace<LandingFragment>(R.id.fragmentContainer, )
-
             }
         }
-
-
         TokenManager.init(applicationContext)
-
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+        GlobalScope.launch {
+            while (true) {
+                delay(1000)
+
+                val inactiveFor = System.currentTimeMillis() - delayNoAction
+                Log.d("INACTIVITY", "Inactive for $inactiveFor ms")
+                if ((inactiveFor > AppConfig.DELAY_NO_ACTION) && firstEntrance == 1) {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@MainActivity, "Sesión cerrada por inactividad", Toast.LENGTH_SHORT).show()
+                        navigate(AppFragments.USERS_FRAGMENT)
+                    }
+                }
+            }
+        }
+       // setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -136,15 +143,18 @@ Log.d("NAVIGATE", lastFragment.toString())
             withContext(Dispatchers.Main) {
                 Toast.makeText(this@MainActivity, "Session expired", Toast.LENGTH_LONG).show()
 
-              //  navigate(AppFragments.LOGIN_FRAGMENT)
             }
         }
     }
-
     fun ensureLoginRepository() {
         if (!::loginRepository.isInitialized) {
             loginRepository = LoginRepository(LoginDataSource(applicationContext))
         }
+    }
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        delayNoAction = System.currentTimeMillis()
+        Log.d("TOUCH", "Global touch detected → delayNoAction reset. $delayNoAction --   delayed set ${AppConfig.DELAY_NO_ACTION}")
+        return super.dispatchTouchEvent(ev)
     }
 
 
