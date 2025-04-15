@@ -18,7 +18,11 @@ import com.example.storeclient.ui.main.MainActivity
 import com.example.storeclient.databinding.FragmentLoginBinding
 
 import com.example.storeclient.R
+import com.example.storeclient.data.LoginDataSource
+import com.example.storeclient.data.LoginRepository
 import com.example.storeclient.utils.goToUsers
+import com.example.storeclient.ui.login.LoginViewModelFactory
+
 
 class LoginFragment : Fragment() {
 
@@ -43,9 +47,11 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val appContext = requireContext().applicationContext
+        val loginRepository = LoginRepository(LoginDataSource(appContext))
         loginViewModel = ViewModelProvider(
             this,
-            LoginViewModelFactory.LoginViewModelFactory(requireActivity() as MainActivity)
+            LoginViewModelFactory(loginRepository)
         ).get(LoginViewModel::class.java)
 
         // Unlock login in case it was locked from a previous session
@@ -62,10 +68,12 @@ class LoginFragment : Fragment() {
         binding.username.text.clear()
         binding.password.text.clear()
 
+
+
         loginViewModel = ViewModelProvider(
             this,
-            LoginViewModelFactory.LoginViewModelFactory(requireActivity() as MainActivity)
-        ).get(LoginViewModel::class.java)
+            LoginViewModelFactory(loginRepository)
+        )[LoginViewModel::class.java]
 
         val usernameEditText = binding.username
         val passwordEditText = binding.password

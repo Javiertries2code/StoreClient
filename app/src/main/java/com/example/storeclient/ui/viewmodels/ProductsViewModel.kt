@@ -1,6 +1,8 @@
 package com.example.storeclient.ui.viewmodels
 
+import android.app.Application
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +11,7 @@ import com.example.storeclient.data.ApiService
 import com.example.storeclient.entities.ProductsItem
 import kotlinx.coroutines.launch
 
-class ProductsViewModel : ViewModel() {
+class ProductsViewModel(application: Application) : AndroidViewModel(application){
 
     private val _products = MutableLiveData<List<ProductsItem>>()
     val products: LiveData<List<ProductsItem>> = _products
@@ -18,7 +20,7 @@ class ProductsViewModel : ViewModel() {
     private val _saveStatus = MutableLiveData<Boolean>()
     val saveStatus: LiveData<Boolean> = _saveStatus
 
-    private val service = ApiService.makeRetrofitService()
+    private val service = ApiService.makeRetrofitService(application.applicationContext)
 
     fun loadProducts() {
         viewModelScope.launch {

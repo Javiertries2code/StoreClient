@@ -1,7 +1,9 @@
 package com.example.storeclient.ui.viewmodels
 
+import android.app.Application
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,9 +15,9 @@ import com.example.storeclient.helpers.EmailHelper
 import com.example.storeclient.utils.ExcelExporter
 import kotlinx.coroutines.launch
 
-class InventoryViewModel : ViewModel() {
+class InventoryViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val service = ApiService.makeRetrofitService()
+    private val service = ApiService.makeRetrofitService(application.applicationContext)
 
     private val fullProductList = mutableListOf<ProductsItem>()
 

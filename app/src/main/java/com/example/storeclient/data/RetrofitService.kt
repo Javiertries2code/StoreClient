@@ -1,21 +1,17 @@
 package com.example.storeclient.data
 
-import com.example.storeclient.entities.Products
+import android.content.Context
 import com.example.storeclient.entities.ProductsItem
-import com.example.storeclient.entities.Users
 import com.example.storeclient.entities.UsersItem
 import com.example.storeclient.model.CryptoKeys
 import com.example.storeclient.model.LoggedInUser
 import com.example.storeclient.model.LoginRequest
 import okhttp3.OkHttpClient
 import com.example.storeclient.BuildConfig
-import com.example.storeclient.data.interceptors.EncryptionInterceptor
 import com.example.storeclient.data.interceptors.HeaderInterceptor
 import com.example.storeclient.crypto.DecryptingConverterFactory
 import com.example.storeclient.crypto.EncryptingConverterFactory
-import com.example.storeclient.model.ApiResponse
-import org.apache.poi.ss.formula.functions.T
-import retrofit2.Response
+import com.example.storeclient.data.interceptors.ErrorInterceptor
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -30,21 +26,16 @@ interface RetrofitService {
     ////TEST AREA
     @GET("test/users")
     suspend fun testListUsers(): List<UsersItem>
-
-    @GET("test/products")
-    suspend fun getAllProducts(): List<ProductsItem>
-
-
-
     ///TEST
+
+
     @POST("auth/login")
     suspend fun login(@Body request: LoginRequest): LoggedInUser
 
     @POST("auth/get_Keys")
     suspend fun createProduct(@Body product: LoginRequest): CryptoKeys
 
-    @GET("products/{id}")
-    suspend fun getOneProduct(@Path("id") id: String): ProductsItem
+
 
 //    @GET("products")
 //    suspend fun getAllProducts(): Products
@@ -53,7 +44,14 @@ interface RetrofitService {
     suspend fun getOneUser(@Path("id") id: String): UsersItem
 
     @GET("users")
-    suspend fun getAllUsers(): Response<ApiResponse<List<UsersItem>>>
+    suspend fun getAllUsers(): List<UsersItem>
+
+///PRODUCTS
+    @GET("products")
+    suspend fun getAllProducts(): List<ProductsItem>
+
+    @GET("products/{id}")
+    suspend fun getOneProduct(@Path("id") id: String): ProductsItem
 
     @DELETE("products/{id}")
     suspend fun eraseProduct(@Path("id") productId: String)
@@ -77,7 +75,7 @@ interface RetrofitService {
 object ApiService {
     private var instance: RetrofitService? = null
 
-    fun makeRetrofitService(): RetrofitService {
+    fun makeRetrofitService(context: Context): RetrofitService {
         if (instance == null) {
             val gsonFactory = GsonConverterFactory.create()
             val decryptingFactory = DecryptingConverterFactory(gsonFactory)
@@ -87,16 +85,19 @@ object ApiService {
                 .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(decryptingFactory)
                 .addConverterFactory(encryptingFactory)
-                .client(getClient())
+                .addCallAdapterFactory(SafeCallAdapterFactory(context)) // ✅ context ya válido
+                .client(getClient(context)) // 👈 también lo puedes pasar aquí si tu cliente lo necesita
                 .build()
                 .create(RetrofitService::class.java)
         }
         return instance!!
     }
-    
-    private fun getClient(): OkHttpClient {
+
+
+    private fun getClient(context: Context): OkHttpClient {
         val client = OkHttpClient.Builder()
             .addInterceptor(HeaderInterceptor())
+            .addInterceptor(ErrorInterceptor(context))
             .build()
         return client
     }

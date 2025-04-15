@@ -30,14 +30,15 @@ class UsersFragment : BaseFragment(R.layout.fragment_users_list){
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.list)
-        val service = ApiService.makeRetrofitService()
+        val service = ApiService.makeRetrofitService(requireContext())
 
         lifecycleScope.launch {
             try {
-                val list_users = service.testListUsers()
+                val list_all_users = service.getAllUsers()
 
-                if (!list_users.isNullOrEmpty()) {
+                if (!list_all_users.isNullOrEmpty()) {
 
+                    val list_users = list_all_users.filter { it.enabled == 1 }
 
                     recyclerView.layoutManager = when {
                         columnCount <= 1 -> LinearLayoutManager(context)

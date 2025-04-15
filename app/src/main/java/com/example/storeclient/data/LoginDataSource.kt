@@ -1,5 +1,6 @@
 package com.example.storeclient.data
 
+import android.content.Context
 import com.example.storeclient.model.LoggedInUser
 import com.example.storeclient.model.LoginRequest
 import java.io.IOException
@@ -7,12 +8,12 @@ import java.io.IOException
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.
  */
-class LoginDataSource {
+class LoginDataSource(private val context: Context){
 
      suspend fun login(email: String, password: String): Result<LoggedInUser> {
         try {
             // TODO: handle loggedInUser authentication
-            val service = ApiService.makeRetrofitService()
+            val service = ApiService.makeRetrofitService(context)
             val request = LoginRequest(email , password)
 
             val loggedUser = service.login(request)
