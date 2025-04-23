@@ -7,7 +7,7 @@ object AppConfig {
     const val AUTO_LOGOUT_DELAY_MS = 10 * 60 * 1000L // 10 minutos
     const val AUTO_LOGOUT_DEBUG = 20 * 60 * 2000L
 
-    const val DELAY_NO_ACTION = 10000L
+    const val DELAY_NO_ACTION = 20000L
 
     const val DEV_SKIP_LOGIN = false
 

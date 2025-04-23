@@ -67,7 +67,7 @@ lateinit var lastFragment: AppFragments
                 Log.d("INACTIVITY", "Inactive for $inactiveFor ms")
                 if ((inactiveFor > AppConfig.DELAY_NO_ACTION) && firstEntrance == 1) {
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(this@MainActivity, "Sesión cerrada por inactividad", Toast.LENGTH_SHORT).show()
+                       // Toast.makeText(this@MainActivity, "Sesión cerrada por inactividad", Toast.LENGTH_SHORT).show()
                         navigate(AppFragments.USERS_FRAGMENT)
                     }
                 }
