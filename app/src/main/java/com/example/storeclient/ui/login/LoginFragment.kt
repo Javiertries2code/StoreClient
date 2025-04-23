@@ -48,7 +48,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val appContext = requireContext().applicationContext
-        val loginRepository = LoginRepository(LoginDataSource(appContext))
+        val loginRepository = LoginRepository.getInstance(LoginDataSource(requireContext().applicationContext))
         loginViewModel = ViewModelProvider(
             this,
             LoginViewModelFactory(loginRepository)

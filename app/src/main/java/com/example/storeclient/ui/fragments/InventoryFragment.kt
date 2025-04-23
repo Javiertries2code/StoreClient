@@ -63,12 +63,17 @@ class InventoryFragment : BaseFragment(R.layout.fragment_inventory) {
         val activity = requireActivity() as MainActivity
 
         if (AppConfig.DEV_SKIP_LOGIN == false) {
+            Log.d("AuthObserver", "It comes it to check the null")
 
             val repo = activity.loginRepository
             repo.loggedInUser.observe(viewLifecycleOwner) { user ->
                 if (user == null) {
                     Log.d("AuthObserver", "User is null, navigating to login")
                     activity.navigate(AppFragments.LOGIN_FRAGMENT)
+                }
+                else{
+                    Log.d("AuthObserver", "$user.displayName")
+
                 }
             }
         }

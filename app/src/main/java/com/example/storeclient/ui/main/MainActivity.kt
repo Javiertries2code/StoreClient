@@ -148,7 +148,7 @@ Log.d("NAVIGATE", lastFragment.toString())
     }
     fun ensureLoginRepository() {
         if (!::loginRepository.isInitialized) {
-            loginRepository = LoginRepository(LoginDataSource(applicationContext))
+            loginRepository = LoginRepository.getInstance(LoginDataSource(applicationContext))
         }
     }
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {

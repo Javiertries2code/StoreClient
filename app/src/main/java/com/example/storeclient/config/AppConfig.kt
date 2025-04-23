@@ -5,7 +5,7 @@ object AppConfig {
     const val IMAGE_COMPRESSION_QUALITY = 70
 
     const val AUTO_LOGOUT_DELAY_MS = 10 * 60 * 1000L // 10 minutos
-    const val AUTO_LOGOUT_DEBUG = 20 * 60 * 2000L
+    const val AUTO_LOGOUT_DEBUG = 20000L
 
     const val DELAY_NO_ACTION = 20000L
 
