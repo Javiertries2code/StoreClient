@@ -25,6 +25,16 @@ class ProductsAdapter :
         private val image = view.findViewById<ImageView>(R.id.product_image)
 
         fun bind(item: ProductsItem) {
+
+
+            if(item.enabled == 0)
+            {
+                itemView.visibility = View.GONE
+                itemView.layoutParams = RecyclerView.LayoutParams(0, 0)
+                return
+
+            }
+
             name.text = item.name
             amount.text = item.amount.toString()
             if (item.image == null) {
@@ -33,28 +43,22 @@ class ProductsAdapter :
                 image.setImageBitmap(item.image.toBitmap())
             }
 
-
-
-if(item.enabled == 0)
-{
-    amount.setTextColor(Color.BLACK)
-    name.setTextColor(Color.BLACK)
-    minimmun_amount.text = "Producto deshabilitado"
-    minimmun_amount.setTextColor(Color.BLUE)
-}
-else {
     if (item.amount < item.minimumAmount) {
         minimmun_amount.text = "Bajo Stock"
         minimmun_amount.setTextColor(Color.RED)
         amount.setTextColor(Color.RED)
         name.setTextColor(Color.RED)
+        itemView.setBackgroundColor(Color.YELLOW)
+
     } else {
         amount.setTextColor(Color.BLACK)
         name.setTextColor(Color.BLACK)
         minimmun_amount.text = "Stock OK"
         minimmun_amount.setTextColor(Color.GREEN)
+        itemView.setBackgroundColor(Color.TRANSPARENT)
 
-    }
+
+
 }
 //            else if(item.amount > ProductLevel.HIGH.thresold) {
 //                amount.setTextColor(Color.GREEN)

@@ -59,7 +59,7 @@ class DecryptingConverterFactory(
                 "user" -> gson.fromJson(dataJson, UsersItem::class.java)
                 "listproduct" -> gson.fromJson(dataJson, object : TypeToken<List<ProductsItem>>() {}.type)
                 "product" -> gson.fromJson(dataJson, ProductsItem::class.java)
-                "token" -> gson.fromJson(dataJson, LoggedInUser::class.java)
+                "loggedUser" -> gson.fromJson(dataJson, LoggedInUser::class.java)
 
                 else -> {
                     Log.e("Decrypting", "❌ Unknown type: $typeName")

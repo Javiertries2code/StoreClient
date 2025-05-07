@@ -32,12 +32,24 @@ class ProductsViewModel(application: Application) : AndroidViewModel(application
             }
         }
     }
+    fun loadEnabledProducts() {
+        viewModelScope.launch {
+            try {
+                val list = service.getAllProducts().filter { it.enabled != 0 }
+                _products.value = list
+            } catch (e: Exception) {
+                Log.e("Debug", "ProductsViewModel - Error al cargar productos", e)
+            }
+        }
+    }
+
+
 
     fun deleteProduct(productId: Int) {
         viewModelScope.launch {
             try {
                 service.deleteProduct(productId.toString())
-                loadProducts() // I load products once again, though the list adapter will find those different and replace them
+                loadEnabledProducts() // I load products once again, though the list adapter will find those different and replace them
             } catch (e: Exception) {
                 Log.e("ProductsViewModel", "Error al eliminar producto", e)
             }
@@ -48,7 +60,7 @@ class ProductsViewModel(application: Application) : AndroidViewModel(application
         viewModelScope.launch {
             try {
                 service.addProduct(productId.toString())
-                loadProducts() // I load products once again, though the list adapter will find those different and replace them
+                loadEnabledProducts() // I load products once again, though the list adapter will find those different and replace them
             } catch (e: Exception) {
                 Log.e("ProductsViewModel", "Error al añadir producto", e)
             }

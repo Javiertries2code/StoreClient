@@ -58,7 +58,7 @@ class ProdutcsFragment : BaseFragment(R.layout.fragment_produtcs_list) {
             navigateTo(AppFragments.ADD_PRODUCT_FRAGMENT)
         }
 
-        viewModel.loadProducts()
+        viewModel.loadEnabledProducts()
 
         val swipeCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
 //So this ensures it cant swipe when stock goes downt to 0
