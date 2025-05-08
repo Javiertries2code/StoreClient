@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:clickable="true"
         android:focusable="true"
-        android:descendantFocusability="blocksDescendants">
+        android:descendantFocusability="afterDescendants">
 
 
     <androidx.appcompat.widget.Toolbar
