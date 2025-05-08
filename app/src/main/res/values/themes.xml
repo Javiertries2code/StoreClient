@@ -1,8 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
+
     <style name="Base.Theme.StoreClient" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">#0C3E27</item>         <!-- Color principal -->
+        <item name="colorPrimaryVariant">#156D5A</item> <!-- Variante (más oscuro) -->
+        <item name="colorOnPrimary">#FFFFFF</item>      <!-- Color del texto sobre colorPrimary -->
+        <item name="colorSecondary">#EEA2FF</item>      <!-- Color de acento -->
+        <item name="materialButtonStyle">@style/MyButtonStyle</item>
+
     </style>
 
     <style name="Theme.StoreClient" parent="Base.Theme.StoreClient" />

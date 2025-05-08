@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MyButtonStyle" parent="Widget.Material3.Button">
+        <item name="shapeAppearance">@style/MyButtonShape</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="backgroundTint">?attr/colorPrimaryVariant</item>
+    </style>
+
+    <style name="MyButtonShape" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerSize">5dp</item> <!-- o 50% para pill shape -->
+    </style>
+
+</resources>
